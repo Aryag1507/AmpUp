@@ -1,21 +1,16 @@
 //
-//  Profile.swift
+//  EditProfile.swift
 //  AmpUp
-//
-//  Created by Arya Gupta on 2/14/24.
+//  Profile Editing Page
+//  Created by Jack Sanchez on 2/14/24.
 //
 
 import SwiftUI
 
-//struct UserProfile {
-//    var name: String
-//    var age: Int
-//    var gender: String
-//    //    undeclared variables for userProfile struct
-//}
-
-struct Profile: View {
-
+struct EditProfile: View {
+    @State private var name: String = ""
+    @State private var gender: String = ""
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Image(systemName: "person.circle.fill")
@@ -24,25 +19,26 @@ struct Profile: View {
                 .clipShape(Circle())
                 .padding()
             
-            Text("John Doe")
-            Text("Male")
-            
-            NavigationLink(destination: EditProfile()) {
-                Text("Edit Profile")
-                    .padding()
+            NavigationLink(destination: EditProfilePic()) {
+                Text("Edit Profile Picture")
+                    .padding(5)
                     .foregroundColor(.white)
                     .background(Color.blue)
                     .cornerRadius(8)
             }
+            
+            TextField("Edit Name", text: $name)
+            TextField("Edit Gender", text: $gender)
+            
             Spacer()
         }
         .padding()
     }
 }
 
-struct Profile_Previews: PreviewProvider {
+struct EditProfile_Previews: PreviewProvider {
     static var previews: some View {
-        Profile()
+        EditProfile()
     }
 }
 
