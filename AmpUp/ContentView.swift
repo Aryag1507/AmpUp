@@ -48,12 +48,7 @@ struct Profile: View {
             .navigationTitle("My Profile")
     }
 }
-struct Login: View {
-    var body: some View {
-        Text("Log in")
-            .navigationTitle("Log in")
-    }
-}
+
 struct Signup: View {
     var body: some View {
         Text("Sign up")
