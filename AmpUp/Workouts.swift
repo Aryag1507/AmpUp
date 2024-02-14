@@ -1,39 +1,30 @@
-//
-//  Workouts.swift
-//  AmpUp
-//
-//  Created by Arya Gupta on 2/14/24.
-//
-
 import SwiftUI
 
 struct Workouts: View {
     var body: some View {
-        VStack{
-            NavigationLink(destination: Legs()) {
-                Text("Leg Workouts")
-                    .padding()
+        VStack(spacing: 20) {
+            Text("Create your workout")
+                .font(.headline)
+            Spacer()
+            NavigationLink(destination: ExerciseListView(title: "Leg Workouts", exercises: legExercises)) {
+                WorkoutButton(title: "Leg Workouts")
             }
-            NavigationLink(destination: Biceps()) {
-                Text("Bicep Workouts")
-                    .padding()
+            NavigationLink(destination: ExerciseListView(title: "Bicep Workouts", exercises: bicepExercises)) {
+                WorkoutButton(title: "Bicep Workouts")
             }
-            NavigationLink(destination: Triceps()) {
-                Text("Tricep Workouts")
-                    .padding()
+            NavigationLink(destination: ExerciseListView(title: "Tricep Workouts", exercises: tricepExercises)) {
+                WorkoutButton(title: "Tricep Workouts")
             }
-            NavigationLink(destination: Chest()) {
-                Text("Chest Workouts")
-                    .padding()
+            NavigationLink(destination: ExerciseListView(title: "Chest Workouts", exercises: chestExercises)) {
+                WorkoutButton(title: "Chest Workouts")
             }
-            NavigationLink(destination: Back()) {
-                Text("Back Workouts")
-                    .padding()
+            NavigationLink(destination: ExerciseListView(title: "Back Workouts", exercises: backExercises)) {
+                WorkoutButton(title: "Back Workouts")
             }
-            NavigationLink(destination: Shoulders()) {
-                Text("Shoulder Workouts")
-                    .padding()
+            NavigationLink(destination: ExerciseListView(title: "Shoulder Workouts", exercises: shoulderExercises)) {
+                WorkoutButton(title: "Shoulder Workouts")
             }
+            Spacer()
             Button(action: {
                 // Action to perform when the button is tapped
                 print("Workout started!")
@@ -45,211 +36,78 @@ struct Workouts: View {
                     .cornerRadius(8)
             }
         }
-        
+        .navigationBarTitle("Workouts")
     }
 }
 
-// Sub-pages of the Workout page (split by muscle group)
-struct Legs: View {
+// Custom button style for workout categories
+struct WorkoutButton: View {
+    var title: String
+    
     var body: some View {
-        VStack{
-            HStack{
-                Text("Barbell Squat")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Button tapped!")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
+        Text(title)
+            .frame(maxWidth: .infinity) //.frame(width: 150)
+            .padding()
+            .foregroundColor(.white)
+            .background(Color.blue)
+            .cornerRadius(8)
+    }
+}
+
+// Sample data for exercises
+let legExercises = ["Barbell Squat", "Leg Extensions"]
+let bicepExercises = ["Dumbbell Curls", "Hammer Curls"]
+let tricepExercises = ["Skull Crushers", "V-Bar Pulldowns"]
+let chestExercises = ["Barbell Bench Press", "Incline Dumbbell Bench Press"]
+let backExercises = ["Lat Pulldowns", "Cable Rows"]
+let shoulderExercises = ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"]
+
+struct ExerciseListView: View {
+    var title: String
+    @State var exercises: [String] // Change to @State
+    
+    @State private var customExercise = ""
+    
+    var body: some View {
+        List {
+            Section(header: Text(title)) {
+                ForEach(exercises, id: \.self) { exercise in
+                    ExerciseRow(exercise: exercise)
                 }
-            }
-            HStack{
-                Text("Leg Extensions")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Leg extensions added to workout.")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
+                HStack {
+                    TextField("Add your own exercise", text: $customExercise)
+                    Button(action: {
+                        if !customExercise.isEmpty {
+                            exercises.append(customExercise)
+                            customExercise = ""
+                        }
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                    }
                 }
             }
         }
+        .listStyle(GroupedListStyle())
+        .navigationBarTitle(Text(title), displayMode: .inline)
     }
 }
-struct Biceps: View {
+
+
+
+struct ExerciseRow: View {
+    var exercise: String
+    
     var body: some View {
-        VStack{
-            HStack{
-                Text("Dumbbell curls")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Dumbbell curls added to workout")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-            HStack{
-                Text("Hammer curls")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Hammer curls added to workout.")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-        }
-    }
-}
-struct Triceps: View {
-    var body: some View {
-        VStack{
-            HStack{
-                Text("Skull crushers")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Skull crushers added to workout")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-            HStack{
-                Text("V-bar Pulldowns")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("V-bar Pulldowns added to workout.")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-        }
-    }
-}
-struct Chest: View {
-    var body: some View {
-        VStack{
-            HStack{
-                Text("Barbell Bench Press")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Barbell Bench Press added to workout")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-            HStack{
-                Text("Incline Dumbbell Bench Press")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Incline Dumbbell Bench Press added to workout.")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-        }
-    }
-}
-struct Back: View {
-    var body: some View {
-        VStack{
-            HStack{
-                Text("Lat Pulldowns")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Lat Pulldowns added to workout")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-            HStack{
-                Text("Cable Rows")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Cable Rows added to workout.")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-        }
-    }
-}
-struct Shoulders: View {
-    var body: some View {
-        VStack{
-            HStack{
-                Text("Dumbbell Shoulder Press")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Dumbbell Shoulder Press added to workout")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
-            }
-            HStack{
-                Text("Dumbbell Lateral Raises")
-                    .padding()
-                Button(action: {
-                    // Action to perform when the button is tapped
-                    print("Dumbbell Lateral Raises added to workout.")
-                }) {
-                    Text("+")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(8)
-                }
+        HStack {
+            Text(exercise)
+            Spacer()
+            Button(action: {
+                // Action to perform when the button is tapped
+                print("\(exercise) added to workout!")
+            }) {
+                Image(systemName: "plus.circle.fill")
+                    .foregroundColor(.green)
             }
         }
     }
