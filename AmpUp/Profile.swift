@@ -40,6 +40,13 @@ struct Profile: View {
     }
 }
 
+struct EditProfile: View {
+
+    var body: some View {
+        Text("Change Name");
+    }
+}
+
 struct Profile_Previews: PreviewProvider {
     static var previews: some View {
         Profile()
