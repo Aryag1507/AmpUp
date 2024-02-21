@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAuth
 struct Login: View {
     @State var username: String = ""
     @State var password: String = ""
@@ -40,6 +40,19 @@ struct Login: View {
             }.padding(.top, 16)
         }.padding()
     }
+}
+
+class Backend{
+    var actionCodeSettings = ActionCodeSettings()
+    func actionCodeSettings.url = URL(string: "https://example.appspot.com")
+    actionCodeSettings.handleCodeInApp = true
+    actionCodeSettings.setAndroidPackageName("com.firebase.example", installIfNotAvailable: false, minimumVersion: "12")
+
+    let provider = FUIEmailAuth(authUI: FUIAuth.defaultAuthUI()!,
+                                signInMethod: FIREmailLinkAuthSignInMethod,
+                                forceSameDevice: false,
+                                allowNewEmailAccounts: true,
+                                actionCodeSetting: actionCodeSettings)
 }
 
 struct InputFieldView: View {

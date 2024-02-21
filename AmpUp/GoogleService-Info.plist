@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>http://146320789501-25eh20n54v2hsrmn50nb8f242c78f7ht.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.146320789501-25eh20n54v2hsrmn50nb8f242c78f7ht</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDBcZ1EdUGDPTDG2sBfr5qdfIqQrcx8oQI</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,16 +19,18 @@
 	<key>STORAGE_BUCKET</key>
 	<string>getbig-6c1ba.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:146320789501:ios:a8094fa5a9609a0dc11394</string>
+	<key>DATABASE_URL</key>
+	<string>https://getbig-6c1ba-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
