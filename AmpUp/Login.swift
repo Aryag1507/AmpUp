@@ -6,71 +6,117 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Login: View {
-    @State var username: String = ""
-    @State var password: String = ""
+    @State private var username: String = ""
+    @State private var password: String = ""
+    @State private var loginError: LoginError?
+    @State private var isAuthenticated: Bool = false  // Track authentication state
+    @State private var showingContentView: Bool = false // Track if ContentView should be shown
     
     var body: some View {
+        NavigationView {
             VStack {
                 Text("Welcome Back!")
                     .font(.largeTitle)
                     .fontWeight(.black)
                     .padding(.bottom, 42)
-            VStack(spacing: 16.0){
-                InputFieldView(data: $username, title: "Username")
-                InputFieldView(data: $password, title: "Password")
-            }.padding(.bottom, 16)
-            Button(action: {}){
-                Text("Log In")
-                    .fontWeight(.heavy)
-                    .font(.title3)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.brown)
-                    .foregroundColor(.white)
-                    .cornerRadius(40)
+                VStack(spacing: 16.0){
+                    InputFieldView(data: $username, title: "Email")
+                    InputFieldView(data: $password, title: "Password")
+                }.padding(.bottom, 16)
+                
+                Button(action: {
+                    signIn()
+                }) {
+                    Text("Log In")
+                        .fontWeight(.heavy)
+                        .font(.title3)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown)
+                        .foregroundColor(.white)
+                        .cornerRadius(40)
+                }
+                .alert(item: $loginError) { error in
+                    Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
+                }
+                
+                HStack{
+                    Spacer()
+                    Text("Forgot Password?")
+                        .fontWeight(.thin)
+                        .foregroundColor(Color.blue)
+                        .underline()
+                }.padding(.top, 16)
             }
-            HStack{
-                Spacer()
-                Text("Forgot Password?")
-                    .fontWeight(.thin)
-                    .foregroundColor(Color.blue)
-                    .underline()
-            }.padding(.top, 16)
-        }.padding()
+            .padding()
+            .navigationBarHidden(true)
+            .background(
+                NavigationLink(
+                    destination: ContentView(),
+                    isActive: $showingContentView
+                ) {
+                    EmptyView()
+                }
+            )
+        }
+        .onChange(of: isAuthenticated) { newValue in
+            if newValue {
+                showingContentView = true
+            }
+        }
+    }
+    
+    func signIn() {
+        Auth.auth().signIn(withEmail: username, password: password) { authResult, error in
+            if let error = error {
+                // Handle login error
+                loginError = LoginError(message: error.localizedDescription)
+            } else {
+                // Authentication successful
+                print("sign in successful")
+                isAuthenticated = true  // Navigate to ContentView
+            }
+        }
     }
 }
+
 
 struct InputFieldView: View {
     @Binding var data: String
     var title: String?
     
     var body: some View {
-      ZStack {
-        TextField("", text: $data)
-          .padding(.horizontal, 10)
-          .frame(height: 42)
-          .overlay(
-            RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-                .stroke(Color.gray, lineWidth: 1)
-          )
-        HStack {                    // HStack for the text
-          Text(title ?? "Input")
-            .font(.headline)
-            .fontWeight(.thin)      // making the text small
-            .foregroundColor(Color.gray)    // and gray
-            .multilineTextAlignment(.leading)
-            .padding(4)
-            .background(.white)     // adding some white background
-          Spacer()                  // pushing the text to the left
-        }
-        .padding(.leading, 8)
-        .offset(CGSize(width: 0, height: -20))  // pushign the text up to overlay the border of the input field
-      }.padding(4)
+        ZStack {
+            TextField("", text: $data)
+                .padding(.horizontal, 10)
+                .frame(height: 42)
+                .overlay(
+                    RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
+                        .stroke(Color.gray, lineWidth: 1)
+                )
+            HStack {
+                Text(title ?? "Input")
+                    .font(.headline)
+                    .fontWeight(.thin)
+                    .foregroundColor(Color.gray)
+                    .multilineTextAlignment(.leading)
+                    .padding(4)
+                    .background(Color.white)
+                Spacer()
+            }
+            .padding(.leading, 8)
+            .offset(CGSize(width: 0, height: -20))
+        }.padding(4)
     }
 }
 
+struct LoginError: Identifiable {
+    let id = UUID()
+    let message: String
+}
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
