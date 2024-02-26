@@ -1,115 +1,145 @@
 import SwiftUI
 
+struct WorkoutGroup {
+    var title: String
+    var exercises: [String]
+}
+
 struct Workouts: View {
+    @State private var workoutStartTime: Date?
+    @State private var workoutGroups: [WorkoutGroup] = [
+        WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
+        WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
+        WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
+    ]
+    
+    private let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Create your workout")
-                .font(.headline)
+        VStack {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(workoutGroups.indices, id: \.self) { index in
+                        NavigationLink(destination: ExerciseListView(title: workoutGroups[index].title, exercises: workoutGroups[index].exercises)) {
+                            WorkoutButton(title: workoutGroups[index].title,
+                                          onRename: {
+                                              // Action to rename the workout group
+                                              // Implement your renaming logic here
+                                              print("Rename action for \(workoutGroups[index].title)")
+                                          },
+                                          onDelete: {
+                                              // Action to delete the workout group
+                                              workoutGroups.remove(at: index)
+                                          })
+                        }
+                    }
+                    Button(action: addWorkoutGroup) {
+                        VStack {
+                            Image(systemName: "plus")
+                                .font(.largeTitle)
+                            Text("Add Workout Group")
+                                .font(.caption)
+                        }
+                        .padding()
+                        .frame(height: 100)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray.opacity(0.5))
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, 10)
+            }
+            
             Spacer()
-            NavigationLink(destination: ExerciseListView(title: "Leg Workouts", exercises: legExercises)) {
-                WorkoutButton(title: "Leg Workouts")
-            }
-            NavigationLink(destination: ExerciseListView(title: "Bicep Workouts", exercises: bicepExercises)) {
-                WorkoutButton(title: "Bicep Workouts")
-            }
-            NavigationLink(destination: ExerciseListView(title: "Tricep Workouts", exercises: tricepExercises)) {
-                WorkoutButton(title: "Tricep Workouts")
-            }
-            NavigationLink(destination: ExerciseListView(title: "Chest Workouts", exercises: chestExercises)) {
-                WorkoutButton(title: "Chest Workouts")
-            }
-            NavigationLink(destination: ExerciseListView(title: "Back Workouts", exercises: backExercises)) {
-                WorkoutButton(title: "Back Workouts")
-            }
-            NavigationLink(destination: ExerciseListView(title: "Shoulder Workouts", exercises: shoulderExercises)) {
-                WorkoutButton(title: "Shoulder Workouts")
-            }
-            Spacer()
-            Button(action: {
-                // Action to perform when the button is tapped
-                print("Workout started!")
-            }) {
-                Text("Start Workout")
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.green)
-                    .cornerRadius(8)
+            
+            HStack(spacing: 10) {
+                Button(action: {
+                    self.workoutStartTime = Date()
+                    print("Workout started at \(String(describing: self.workoutStartTime))")
+                }) {
+                    Text("Start Workout")
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.green)
+                        .cornerRadius(8)
+                }
+                Button(action: {
+                    let workoutEndTime = Date()
+                    if let startTime = self.workoutStartTime {
+                        let workoutDuration = workoutEndTime.timeIntervalSince(startTime)
+                        print("Workout ended at \(workoutEndTime). Total workout time: \(workoutDuration) seconds.")
+                    } else {
+                        print("End Workout pressed without starting a workout.")
+                    }
+                    self.workoutStartTime = nil
+                }) {
+                    Text("End Workout")
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.red)
+                        .cornerRadius(8)
+                }
             }
         }
         .navigationBarTitle("Workouts")
     }
-}
-
-// Custom button style for workout categories
-struct WorkoutButton: View {
-    var title: String
     
-    var body: some View {
-        Text(title)
-            .frame(maxWidth: .infinity) //.frame(width: 150)
-            .padding()
-            .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(8)
+    func addWorkoutGroup() {
+        let newGroup = WorkoutGroup(title: "New Workout Group \(workoutGroups.count + 1)", exercises: ["Exercise 1", "Exercise 2"])
+        workoutGroups.append(newGroup)
     }
 }
 
-// Sample data for exercises
-let legExercises = ["Barbell Squat", "Leg Extensions"]
-let bicepExercises = ["Dumbbell Curls", "Hammer Curls"]
-let tricepExercises = ["Skull Crushers", "V-Bar Pulldowns"]
-let chestExercises = ["Barbell Bench Press", "Incline Dumbbell Bench Press"]
-let backExercises = ["Lat Pulldowns", "Cable Rows"]
-let shoulderExercises = ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"]
+// Custom button style for workout categories, adjusted for grid layout
+struct WorkoutButton: View {
+    var title: String
+    var onRename: () -> Void
+    var onDelete: () -> Void
+    
+    var body: some View {
+        Text(title)
+            .padding()
+            .frame(height: 100) // Specify height for uniformity
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .overlay(
+                Button(action: onRename) {
+                    Image(systemName: "pencil.circle.fill")
+                        .foregroundColor(.white)
+                        .padding([.top, .leading], 10)
+                }, alignment: .topLeading
+            )
+            .overlay(
+                Button(action: onDelete) {
+                    Image(systemName: "trash.circle.fill")
+                        .foregroundColor(.white)
+                        .padding([.top, .trailing], 10)
+                }, alignment: .topTrailing
+            )
+    }
+}
 
 struct ExerciseListView: View {
     var title: String
-    @State var exercises: [String] // Change to @State
-    
-    @State private var customExercise = ""
+    @State var exercises: [String]
     
     var body: some View {
         List {
             Section(header: Text(title)) {
                 ForEach(exercises, id: \.self) { exercise in
-                    ExerciseRow(exercise: exercise)
-                }
-                HStack {
-                    TextField("Add your own exercise", text: $customExercise)
-                    Button(action: {
-                        if !customExercise.isEmpty {
-                            exercises.append(customExercise)
-                            customExercise = ""
-                        }
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                    }
+                    Text(exercise)
                 }
             }
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(title), displayMode: .inline)
-    }
-}
-
-
-
-struct ExerciseRow: View {
-    var exercise: String
-    
-    var body: some View {
-        HStack {
-            Text(exercise)
-            Spacer()
-            Button(action: {
-                // Action to perform when the button is tapped
-                print("\(exercise) added to workout!")
-            }) {
-                Image(systemName: "plus.circle.fill")
-                    .foregroundColor(.green)
-            }
-        }
     }
 }
 
