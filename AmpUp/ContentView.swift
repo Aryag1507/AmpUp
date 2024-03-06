@@ -11,8 +11,6 @@ import Firebase
 import FirebaseDatabase
 import Foundation
 
-
-
 struct ContentView: View {
     @State private var names: [String] = []
     
@@ -48,7 +46,7 @@ struct ContentView: View {
                 var fetchedUsers: [String] = []
                 for doc in snapshot!.documents {
                     print("\(doc.documentID):\(doc.data())")
-                    fetchedUsers.append(doc.data()["name"] as! String )
+                    fetchedUsers.append(doc.data()["name"] as? String ?? "")
                 }
                 print("done fetching")
                 print(fetchedUsers)
@@ -100,7 +98,6 @@ struct ContentView: View {
         }
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
