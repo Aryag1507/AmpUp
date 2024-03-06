@@ -26,7 +26,7 @@ struct ContentView: View {
                 var fetchedUsers: [String] = []
                 for doc in snapshot!.documents {
                     print("\(doc.documentID):\(doc.data())")
-                    fetchedUsers.append(doc.data()["name"] as! String )
+                    fetchedUsers.append(doc.data()["name"] as? String ?? "")
                 }
                 print("done fetching")
                 DispatchQueue.main.async {
