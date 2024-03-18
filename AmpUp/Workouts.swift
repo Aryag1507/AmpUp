@@ -48,6 +48,8 @@ struct Workouts: View {
                 }
 
                 Spacer()
+                
+                WorkoutGraph()
 
                 HStack(spacing: 20) {
                     Button(action: startWorkout) {

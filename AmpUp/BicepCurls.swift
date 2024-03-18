@@ -20,6 +20,7 @@ class BicepCurls: UIView {
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
+        
         if let bodyImage = UIImage(named: "bodySilhouette.png") {
             // This will maintain the aspect ratio of the image
             let aspectRatio = bodyImage.size.width / bodyImage.size.height
@@ -36,6 +37,8 @@ class BicepCurls: UIView {
             let circleRect = CGRect(x: point.x - circleRadius / 2, y: point.y - circleRadius / 2, width: circleRadius, height: circleRadius)
             context.fillEllipse(in: circleRect)
         }
+        
+        
     }
 
     func colorForTemperature(_ temperature: CGFloat) -> UIColor {
@@ -49,6 +52,7 @@ struct BicepCurlsView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> BicepCurls {
         BicepCurls()
+        
     }
 
     func updateUIView(_ uiView: BicepCurls, context: Context) {
@@ -58,8 +62,12 @@ struct BicepCurlsView: UIViewRepresentable {
 
 struct BicepCurlsView_Previews: PreviewProvider {
     static var previews: some View {
-        BicepCurlsView(exerciseName: "Bicep Curls")
-            .frame(width: 300, height: 200) // Set a reasonable size for previewing
-            .previewLayout(.sizeThatFits)
+        
+        VStack{
+            BicepCurlsView(exerciseName: "Bicep Curls")
+                .frame(width: 300, height: 200)
+                .previewLayout(.sizeThatFits)
+        }
+        
     }
 }
