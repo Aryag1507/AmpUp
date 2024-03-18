@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5148F50B2B99790B00B4EBA8 /* BicepCurls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */; };
+		515355C22B98E90200938EC6 /* AllExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515355C12B98E90200938EC6 /* AllExercisesView.swift */; };
 		516081CC2B7D15370005AFC5 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CB2B7D15370005AFC5 /* Login.swift */; };
 		516081CE2B7D17D20005AFC5 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CD2B7D17D20005AFC5 /* Workouts.swift */; };
 		516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CF2B7D17FD0005AFC5 /* Profile.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicepCurls.swift; sourceTree = "<group>"; };
+		515355C12B98E90200938EC6 /* AllExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExercisesView.swift; sourceTree = "<group>"; };
 		516081CB2B7D15370005AFC5 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		516081CD2B7D17D20005AFC5 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
 		516081CF2B7D17FD0005AFC5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 				516081D12B7D18340005AFC5 /* SignUp.swift */,
 				516081CF2B7D17FD0005AFC5 /* Profile.swift */,
 				516081CD2B7D17D20005AFC5 /* Workouts.swift */,
+				515355C12B98E90200938EC6 /* AllExercisesView.swift */,
+				5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */,
 				516081CB2B7D15370005AFC5 /* Login.swift */,
 				9934A10F2B7A699800AC028E /* Assets.xcassets */,
 				9934A1112B7A699800AC028E /* Preview Content */,
@@ -187,7 +193,9 @@
 				516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */,
 				9934A10E2B7A699400AC028E /* ContentView.swift in Sources */,
 				9934A10C2B7A699400AC028E /* AmpUpApp.swift in Sources */,
+				515355C22B98E90200938EC6 /* AllExercisesView.swift in Sources */,
 				516081CE2B7D17D20005AFC5 /* Workouts.swift in Sources */,
+				5148F50B2B99790B00B4EBA8 /* BicepCurls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

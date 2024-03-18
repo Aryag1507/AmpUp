@@ -58,7 +58,6 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView{
             VStack{
                 HStack{
                     NavigationLink(destination: Profile()) {
@@ -96,7 +95,6 @@ struct ContentView: View {
                 Spacer()
             }
         }
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
