@@ -1,6 +1,7 @@
 import SwiftUI
 
-struct WorkoutGroup {
+struct WorkoutGroup: Identifiable {
+    let id = UUID()
     var title: String
     var exercises: [String]
 }
@@ -12,133 +13,126 @@ struct Workouts: View {
         WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
         WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
     ]
-    
-    private let columns: [GridItem] = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    
+    @State private var showingAddWorkoutView = false
+
     var body: some View {
-        VStack {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(workoutGroups.indices, id: \.self) { index in
-                        NavigationLink(destination: ExerciseListView(title: workoutGroups[index].title, exercises: workoutGroups[index].exercises)) {
-                            WorkoutButton(title: workoutGroups[index].title,
-                                          onRename: {
-                                              // Action to rename the workout group
-                                              // Implement your renaming logic here
-                                              print("Rename action for \(workoutGroups[index].title)")
-                                          },
-                                          onDelete: {
-                                              // Action to delete the workout group
-                                              workoutGroups.remove(at: index)
-                                          })
+            VStack {
+                ScrollView {
+                    ForEach(workoutGroups) { group in
+                        NavigationLink(destination: ExerciseListView(title: group.title, exercises: group.exercises)) {
+                            Text(group.title)
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .padding(.horizontal)
                         }
                     }
-                    Button(action: addWorkoutGroup) {
-                        VStack {
-                            Image(systemName: "plus")
-                                .font(.largeTitle)
-                            Text("Add Workout Group")
-                                .font(.caption)
+                    
+                    Button(action: {
+                        showingAddWorkoutView = true
+                    }) {
+                        HStack {
+                            Text("+Add Workout Group")
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Spacer()
                         }
-                        .padding()
-                        .frame(height: 100)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.gray.opacity(0.5))
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    }
+                    .background(Color.gray)
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+                    
+                }
+
+                Spacer()
+
+                HStack(spacing: 20) {
+                    Button(action: startWorkout) {
+                        Text("Start Workout")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.green)
+                            .cornerRadius(10)
+                    }
+
+                    Button(action: endWorkout) {
+                        Text("End Workout")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.red)
+                            .cornerRadius(10)
                     }
                 }
-                .padding(.horizontal)
-                .padding(.top, 10)
+                
             }
-            
-            Spacer()
-            
-            HStack(spacing: 10) {
-                Button(action: {
-                    self.workoutStartTime = Date()
-                    print("Workout started at \(String(describing: self.workoutStartTime))")
-                }) {
-                    Text("Start Workout")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.green)
-                        .cornerRadius(8)
+            .navigationBarTitle("Workouts", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                // Placeholder for navigation action if needed
+            }) {
+                NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups)) {
+                    Image(systemName: "list.bullet")
+                        .foregroundColor(.primary)
                 }
-                Button(action: {
-                    let workoutEndTime = Date()
-                    if let startTime = self.workoutStartTime {
-                        let workoutDuration = workoutEndTime.timeIntervalSince(startTime)
-                        print("Workout ended at \(workoutEndTime). Total workout time: \(workoutDuration) seconds.")
-                    } else {
-                        print("End Workout pressed without starting a workout.")
-                    }
-                    self.workoutStartTime = nil
-                }) {
-                    Text("End Workout")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.red)
-                        .cornerRadius(8)
-                }
+            })
+            .sheet(isPresented: $showingAddWorkoutView) {
+                AddWorkoutGroupView(workoutGroups: $workoutGroups)
             }
         }
-        .navigationBarTitle("Workouts")
-    }
-    
-    func addWorkoutGroup() {
-        let newGroup = WorkoutGroup(title: "New Workout Group \(workoutGroups.count + 1)", exercises: ["Exercise 1", "Exercise 2"])
-        workoutGroups.append(newGroup)
-    }
-}
 
-// Custom button style for workout categories, adjusted for grid layout
-struct WorkoutButton: View {
-    var title: String
-    var onRename: () -> Void
-    var onDelete: () -> Void
+    private func startWorkout() {
+        workoutStartTime = Date()
+        // Additional logic for starting a workout can be added here
+    }
+
+    private func endWorkout() {
+        guard let startTime = workoutStartTime else { return }
+        let workoutDuration = Date().timeIntervalSince(startTime)
+        print("Workout ended. Duration: \(workoutDuration) seconds.")
+        workoutStartTime = nil
+        // Additional logic for ending a workout can be added here
+    }
     
-    var body: some View {
-        Text(title)
-            .padding()
-            .frame(height: 100) // Specify height for uniformity
-            .frame(maxWidth: .infinity)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-            .overlay(
-                Button(action: onRename) {
-                    Image(systemName: "pencil.circle.fill")
-                        .foregroundColor(.white)
-                        .padding([.top, .leading], 10)
-                }, alignment: .topLeading
-            )
-            .overlay(
-                Button(action: onDelete) {
-                    Image(systemName: "trash.circle.fill")
-                        .foregroundColor(.white)
-                        .padding([.top, .trailing], 10)
-                }, alignment: .topTrailing
-            )
+    // Example view for adding a new workout group. Replace with your actual view or form
+    struct AddWorkoutGroupView: View {
+        @Binding var workoutGroups: [WorkoutGroup]
+        @State private var newTitle = ""
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            NavigationView {
+                Form {
+                    TextField("Workout Group Title", text: $newTitle)
+                    Button("Add") {
+                        addNewWorkoutGroup()
+                    }
+                }
+                .navigationBarTitle("Add Workout Group", displayMode: .inline)
+                .navigationBarItems(trailing: Button("Done") {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            }
+        }
+        
+        private func addNewWorkoutGroup() {
+            guard !newTitle.isEmpty else { return }
+            let newGroup = WorkoutGroup(title: newTitle, exercises: [])
+            workoutGroups.append(newGroup)
+            presentationMode.wrappedValue.dismiss()
+        }
     }
 }
 
 struct ExerciseListView: View {
     var title: String
-    @State var exercises: [String]
+    var exercises: [String]
     
     var body: some View {
-        List {
-            Section(header: Text(title)) {
-                ForEach(exercises, id: \.self) { exercise in
-                    Text(exercise)
-                }
-            }
+        List(exercises, id: \.self) { exercise in
+            Text(exercise)
         }
-        .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(title), displayMode: .inline)
     }
 }
