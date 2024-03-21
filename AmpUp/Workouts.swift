@@ -48,26 +48,7 @@ struct Workouts: View {
                 }
 
                 Spacer()
-                
                 WorkoutGraph()
-
-                HStack(spacing: 20) {
-                    Button(action: startWorkout) {
-                        Text("Start Workout")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.green)
-                            .cornerRadius(10)
-                    }
-
-                    Button(action: endWorkout) {
-                        Text("End Workout")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.red)
-                            .cornerRadius(10)
-                    }
-                }
                 
             }
             .navigationBarTitle("Workouts", displayMode: .inline)
