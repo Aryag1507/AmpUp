@@ -9,40 +9,44 @@ import SwiftUI
 import FirebaseFirestore
 import Charts
 
-private func startWorkout() {
-    let db = Firestore.firestore()
-    let pkg: [String: Any] = [
-        "state": "start"
-    ]
-    db.collection("start_stop").document("0").setData(pkg) { error in
-        if let error = error {
-            print("Error writing document: \(error)")
-        } else {
-            print("Started workout!")
-            listenToWorkout()
-        }
-    }
-}
-
-private func endWorkout() {
-    let db = Firestore.firestore()
-    let pkg: [String: Any] = [
-        "state": "stop"
-    ]
-    db.collection("start_stop").document("0").setData(pkg) { error in
-        if let error = error {
-            print("Error writing document: \(error)")
-        } else {
-            print("Ended workout!")
-        }
-    }
-}
 
 
 
 struct WorkoutGraph: View {
     
-    @State private var workoutData: [String] = []
+    @State public var workoutData: [Int] = []
+    
+    private func startWorkout() {
+        let db = Firestore.firestore()
+        let pkg: [String: Any] = [
+            "state": "start"
+        ]
+        db.collection("start_stop").document("0").setData(pkg) { error in
+            if let error = error {
+                print("Error writing document: \(error)")
+            } else {
+                print("Started workout!")
+                listenToWorkout()
+            }
+        }
+    }
+
+    private func endWorkout() {
+        let db = Firestore.firestore()
+        let pkg: [String: Any] = [
+            "state": "stop"
+        ]
+        db.collection("start_stop").document("0").setData(pkg) { error in
+            if let error = error {
+                print("Error writing document: \(error)")
+            } else {
+                print("Ended workout!")
+            }
+        }
+        
+        self.workoutData = []
+    }
+    
     
     private func listenToWorkout() {
         let db = Firestore.firestore()
@@ -57,20 +61,43 @@ struct WorkoutGraph: View {
               print("Document data was empty.")
               return
             }
-            print("Current data: \(data["workouts"])")
-            workoutData = data["workouts"]
+            if let nsArray = data["workouts"] as? NSArray {
+                //get everything from NS_ArrayM to [Int]
+                let intWorkoutsArray = nsArray.compactMap { $0 as? Int }
+                //print("Converted array of integers:", intWorkoutsArray)
+                self.workoutData = intWorkoutsArray
+            }
+            
+            print(self.workoutData)
           }
+        
+
+    }
+    
+    struct LineChart: View {
+        var workoutData: [Int]
+        
+        var body: some View {
+            if #available(iOS 16.0, *) {
+                Chart() {
+                    ForEach(Array(workoutData.enumerated()), id: \.offset) {index,datapoint in
+                        LineMark(
+                            x: .value("Time", index),
+                            y: .value("Microvolts", datapoint)
+                        )
+                    }
+
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
     
     var body: some View {
         
-        
+        LineChart(workoutData: self.workoutData)
         VStack{
-            Chart{
-                ForEach(workoutData) {datapoint in
-                    LineMark(x: .value(Int(Date().timeIntervalSince1970)), y: .value(Int(datapoint)))
-                }
-            }
             HStack{
                 Button(action: startWorkout) {
                     Text("Start Workout")
