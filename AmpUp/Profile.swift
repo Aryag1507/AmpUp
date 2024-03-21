@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import UIKit
 //struct UserProfile {
 //    var name: String
 //    var age: Int
@@ -15,35 +15,90 @@ import SwiftUI
 //}
 
 struct Profile: View {
-
+    @State private var profileName = "John Doe"
+    @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
+    @State private var isShowingImagePicker = false
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .frame(width: 120, height: 120)
-                .clipShape(Circle())
-                .padding()
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all) // Set black background for the entire page
             
-            Text("John Doe")
-            Text("Male")
-            
-            NavigationLink(destination: EditProfile()) {
-                Text("Edit Profile")
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(8)
+            VStack(alignment: .center, spacing: 40) {
+                Spacer().frame(height: 20) // Move VStack slightly down
+                
+                CircleImage(image: profileImage)
+                    .onTapGesture {
+                        isShowingImagePicker = true
+                    }
+                    .sheet(isPresented: $isShowingImagePicker) {
+                        ImagePicker(image: $profileImage)
+                    }
+                
+                HStack {
+                    TextField("Enter your name", text: $profileName)
+                        .foregroundColor(.white)
+                        .font(.system(size: 36))
+                    
+                    Spacer().frame(width: 50) // Add spacer to adjust spacing between "John Doe" and "Edit"
+                    
+                    NavigationLink(destination: EditProfile(profileName: $profileName)) {
+                        Text("Edit")
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.gray.opacity(0))
+                            .cornerRadius(1)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
+                }
+                
+                NavigationLink(destination: PreviousWorkouts()) {
+                    Text("My Previous Workouts")
+                        .bold()
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(red: 182/255, green: 4/255, blue: 42/255))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.white, lineWidth: 2)
+                        )
+                }
+                
+                Spacer()
             }
-            Spacer()
+            .padding()
         }
-        .padding()
     }
 }
 
-struct EditProfile: View {
 
+struct EditProfile: View {
+    @Binding var profileName: String
+    
     var body: some View {
-        Text("Change Name");
+        ZStack{
+            Color.black.edgesIgnoringSafeArea(.all)
+            VStack {
+                TextField("Enter your new name", text: $profileName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                Spacer()
+            }
+        }
+    }
+}
+
+
+struct PreviousWorkouts: View {
+    var body: some View {
+        ZStack { // Use ZStack to contain all views
+            Color.black.edgesIgnoringSafeArea(.all)
+            Text("Previous workouts here")
+                .foregroundColor(.white)
+        }
     }
 }
 
@@ -52,6 +107,60 @@ struct Profile_Previews: PreviewProvider {
         Profile()
     }
 }
+
+struct CircleImage: View {
+    var image: Image?
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(Color.white)
+                .frame(width: 120, height: 120)
+            
+            image?
+                .resizable()
+                .frame(width: 120, height: 120)
+                .clipShape(Circle())
+                .overlay {
+                    Circle().stroke(.white, lineWidth: 4)
+                }
+                .shadow(radius: 7)
+        }
+    }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Binding var image: Image?
+
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        @Binding var image: Image?
+
+        init(image: Binding<Image?>) {
+            _image = image
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                image = Image(uiImage: uiImage)
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(image: $image)
+    }
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        picker.sourceType = .photoLibrary
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+}
+
 
 // undeclared struct for user profiles, should display by user
 

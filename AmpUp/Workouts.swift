@@ -7,7 +7,6 @@ struct WorkoutGroup: Identifiable {
 }
 
 struct Workouts: View {
-    @State private var workoutStartTime: Date?
     @State private var workoutGroups: [WorkoutGroup] = [
         WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
         WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
@@ -64,19 +63,6 @@ struct Workouts: View {
                 AddWorkoutGroupView(workoutGroups: $workoutGroups)
             }
         }
-
-    private func startWorkout() {
-        workoutStartTime = Date()
-        // Additional logic for starting a workout can be added here
-    }
-
-    private func endWorkout() {
-        guard let startTime = workoutStartTime else { return }
-        let workoutDuration = Date().timeIntervalSince(startTime)
-        print("Workout ended. Duration: \(workoutDuration) seconds.")
-        workoutStartTime = nil
-        // Additional logic for ending a workout can be added here
-    }
     
     // Example view for adding a new workout group. Replace with your actual view or form
     struct AddWorkoutGroupView: View {
@@ -114,7 +100,9 @@ struct ExerciseListView: View {
     
     var body: some View {
         List(exercises, id: \.self) { exercise in
-            Text(exercise)
+            NavigationLink(destination: BicepCurlsView(exerciseName: exercise)) {
+                Text(exercise)
+            }
         }
         .navigationBarTitle(Text(title), displayMode: .inline)
     }
