@@ -57,6 +57,18 @@ struct BicepCurlsView: View {
                 Spacer()
                 Spacer()
 
+        
+        if let bodyImage = UIImage(named: "bodySilhouette.png") {
+            // This will maintain the aspect ratio of the image
+            let aspectRatio = bodyImage.size.width / bodyImage.size.height
+            let scaledHeight = rect.width / aspectRatio
+            let imageRect = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.width, height: scaledHeight)
+            bodyImage.draw(in: imageRect)
+        }
+        
+        temperatureData.forEach { (point, temperature) in
+            let color = self.colorForTemperature(temperature)
+            context.setFillColor(color.cgColor)
                 HStack(spacing: 20) {
                     Button("Start Workout") {
                         startWorkout()
@@ -83,9 +95,20 @@ struct BicepCurlsView: View {
                 )
             }
         }
+        
+    }
 
-    private func startWorkout() {
-        workoutStartTime = Date()
+    func colorForTemperature(_ temperature: CGFloat) -> UIColor {
+        let normalizedTemperature = min(max(temperature, 0), 1)
+        return UIColor(red: normalizedTemperature, green: 0, blue: 1 - normalizedTemperature, alpha: 1)
+    }
+}
+
+struct BicepCurlsView: UIViewRepresentable {
+    var exerciseName: String
+
+    func makeUIView(context: Context) -> BicepCurls {
+        BicepCurls()
     }
 
     private func endWorkout() {
@@ -98,8 +121,10 @@ struct BicepCurlsView: View {
 
 struct BicepCurlsView_Previews: PreviewProvider {
     static var previews: some View {
-        BicepCurlsView(exerciseName: "Bicep Curls")
-            .previewLayout(.sizeThatFits)
-            .padding()
+        VStack{
+            BicepCurlsView(exerciseName: "Bicep Curls")
+                .frame(width: 300, height: 200)
+                .previewLayout(.sizeThatFits)
+        }
     }
 }

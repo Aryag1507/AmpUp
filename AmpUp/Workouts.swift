@@ -45,7 +45,10 @@ struct Workouts: View {
                     .padding(.horizontal)
                     
                 }
-            
+
+                Spacer()
+                WorkoutGraph()
+                
             }
             .navigationBarTitle("Workouts", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
