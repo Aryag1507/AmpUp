@@ -15,6 +15,9 @@ struct Workouts: View {
     @State private var showingAddWorkoutView = false
 
     var body: some View {
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            
             VStack {
                 ScrollView {
                     ForEach(workoutGroups) { group in
@@ -60,6 +63,7 @@ struct Workouts: View {
                 AddWorkoutGroupView(workoutGroups: $workoutGroups)
             }
         }
+    }
     
     // Example view for adding a new workout group. Replace with your actual view or form
     struct AddWorkoutGroupView: View {
