@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import Charts
+import FirebaseAuth
 //struct UserProfile {
 //    var name: String
 //    var age: Int
@@ -16,6 +17,7 @@ import Charts
 //}
 
 struct Profile: View {
+    @EnvironmentObject var appState: AppState
     @State private var profileName = "John Doe"
     @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
     @State private var isShowingImagePicker = false
@@ -69,10 +71,28 @@ struct Profile: View {
                 }
                 
                 Spacer()
+                Button("Sign Out") {
+                    signOut()
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.red)
+                .cornerRadius(8)
+
+                Spacer()
             }
             .padding()
         }
+        
     }
+    func signOut() {
+                do {
+                    try Auth.auth().signOut()
+                    appState.isLoggedIn = false
+                } catch let signOutError as NSError {
+                    print("Error signing out: %@", signOutError)
+                }
+            }
 }
 
 

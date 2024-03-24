@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct Login: View {
+    @EnvironmentObject var appState: AppState
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var loginError: LoginError?
@@ -89,7 +90,9 @@ struct Login: View {
             } else {
                 // Authentication successful
                 print("sign in successful")
-                isAuthenticated = true  // Navigate to ContentView
+                DispatchQueue.main.async {
+                    self.appState.isLoggedIn = true // Update app state to indicate user is logged in
+                }
             }
         }
     }
@@ -140,6 +143,6 @@ struct LoginError: Identifiable {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        Login().environmentObject(AppState())
     }
 }
