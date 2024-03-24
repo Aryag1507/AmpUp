@@ -7,6 +7,7 @@ struct WorkoutGroup: Identifiable {
 }
 
 struct Workouts: View {
+    @EnvironmentObject var appState: AppState
     @State private var workoutGroups: [WorkoutGroup] = [
         WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
         WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
@@ -54,14 +55,20 @@ struct Workouts: View {
                 
             }
             .navigationBarTitle("Workouts", displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {
-                // Placeholder for navigation action if needed
-            }) {
-                NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups)) {
-                    Image(systemName: "list.bullet")
-                        .foregroundColor(.primary)
+            .navigationBarItems(
+                leading: NavigationLink(destination: Profile().environmentObject(appState)) {
+                    Image(systemName: "person.crop.circle")
+                        .foregroundColor(.white)
+                },
+                trailing: Button(action: {
+                    // Placeholder for navigation action if needed
+                }) {
+                    NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups).environmentObject(appState)) {
+                        Image(systemName: "list.bullet")
+                            .foregroundColor(.white)
+                    }
                 }
-            })
+            )
             .sheet(isPresented: $showingAddWorkoutView) {
                 AddWorkoutGroupView(workoutGroups: $workoutGroups)
             }
@@ -114,6 +121,6 @@ struct ExerciseListView: View {
 
 struct Workouts_Previews: PreviewProvider {
     static var previews: some View {
-        Workouts()
+        Workouts().environmentObject(AppState())
     }
 }
