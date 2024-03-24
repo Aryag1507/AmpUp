@@ -8,6 +8,10 @@
 import SwiftUI
 import UIKit
 import Charts
+import FirebaseAuth
+import Foundation
+import Charts
+import FirebaseFirestore
 //struct UserProfile {
 //    var name: String
 //    var age: Int
@@ -16,6 +20,7 @@ import Charts
 //}
 
 struct Profile: View {
+    @EnvironmentObject var appState: AppState
     @State private var profileName = "John Doe"
     @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
     @State private var isShowingImagePicker = false
@@ -69,10 +74,28 @@ struct Profile: View {
                 }
                 
                 Spacer()
+                Button("Sign Out") {
+                    signOut()
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.red)
+                .cornerRadius(8)
+
+                Spacer()
             }
             .padding()
         }
+        
     }
+    func signOut() {
+                do {
+                    try Auth.auth().signOut()
+                    appState.isLoggedIn = false
+                } catch let signOutError as NSError {
+                    print("Error signing out: %@", signOutError)
+                }
+            }
 }
 
 
@@ -94,11 +117,64 @@ struct EditProfile: View {
 
 
 struct PreviousWorkouts: View {
+    @State private var workoutData: [[Int]] = [] // Array to hold workout data
+    
     var body: some View {
-        ZStack { // Use ZStack to contain all views
-            Color.black.edgesIgnoringSafeArea(.all)
-            Text("Previous workouts here")
-                .foregroundColor(.white)
+        ScrollView{
+            ZStack {
+                Color.black.edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    ForEach(workoutData.indices, id: \.self) { index in
+                        // Display a chart for each set of workout data
+                        LineChart(workoutData: workoutData[index])
+                            .frame(height: 200) // Adjust the height as needed
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    // Fetch workout data from Firestore when the view appears
+                    fetchWorkoutData()
+                }
+            }
+        }
+    }
+    
+    func fetchWorkoutData() {
+        let db = Firestore.firestore()
+        let userID = "dummy3" // Replace with actual user ID
+        
+        db.collection("users").document(userID).collection("workouts").getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                for document in querySnapshot!.documents {
+                    if let workoutArray = document.data()["workoutData"] as? [Int] {
+                        // Append workout data to the array
+                        workoutData.append(workoutArray)
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct LineChart: View {
+    var workoutData: [Int]
+    
+    var body: some View {
+        if #available(iOS 16.0, *) {
+            Chart() {
+                ForEach(Array(workoutData.enumerated()), id: \.offset) {index,datapoint in
+                    LineMark(
+                        x: .value("Time", index),
+                        y: .value("Microvolts", datapoint)
+                    )
+                }
+
+            }
+        } else {
+            // Fallback on earlier versions
         }
     }
 }

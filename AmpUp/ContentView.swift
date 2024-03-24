@@ -13,7 +13,7 @@ import Foundation
 
 struct ContentView: View {
     @State private var names: [String] = []
-    
+    @EnvironmentObject var appState: AppState
     func loadUsers(){
         print("Firing load users")
         let db = Firestore.firestore()
@@ -62,17 +62,17 @@ struct ContentView: View {
             Color.black.edgesIgnoringSafeArea(.all)
             VStack{
                 HStack{
-                    NavigationLink(destination: Profile()) {
+                    NavigationLink(destination: Profile().environmentObject(appState)) {
                         Text("My Profile")
                             .foregroundColor(.white)
                             .padding()
                     }
-                    NavigationLink(destination: Login()) {
+                    NavigationLink(destination: Login().environmentObject(appState)) {
                         Text("Log in")
                             .foregroundColor(.white)
                             .padding()
                     }
-                    NavigationLink(destination: Signup()) {
+                    NavigationLink(destination: Signup().environmentObject(appState)) {
                         Text("Sign up")
                             .foregroundColor(.white)
                             .padding()
@@ -93,7 +93,7 @@ struct ContentView: View {
 //                List(names, id: \.self) {name in Text(name)}
 //                    .onAppear{loadUsers()}
                 
-                NavigationLink(destination: Workouts()) {
+                NavigationLink(destination: Workouts().environmentObject(appState)) {
                     Text("Create Workout")
                         .padding()
                         .foregroundColor(.white)
@@ -109,8 +109,8 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
-            ContentView()
+            ContentView().environmentObject(AppState())
+            ContentView().environmentObject(AppState())
         }
     }
 }

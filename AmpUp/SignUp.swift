@@ -3,6 +3,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct Signup: View {
+    @EnvironmentObject var appState: AppState
     @State private var name: String = "" // Field for user's name
     @State private var username: String = ""
     @State private var email: String = ""
@@ -35,6 +36,9 @@ struct Signup: View {
                         errorMessage = "Failed to save user data: \(error.localizedDescription)"
                     } else {
                         print("User data successfully written to Firestore with username as ID")
+                        DispatchQueue.main.async {
+                            self.appState.isLoggedIn = true // Update app state to indicate user is logged in
+                        }
                         // Here, you can navigate to another view or perform other actions upon successful sign up and data save
                     }
                 }
@@ -80,6 +84,6 @@ struct Signup: View {
 
 struct Signup_Previews: PreviewProvider {
     static var previews: some View {
-        Signup()
+        Signup().environmentObject(AppState())
     }
 }
