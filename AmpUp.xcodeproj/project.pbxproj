@@ -26,6 +26,7 @@
 		9934A1272B7A6CFA00AC028E /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9934A1262B7A6CFA00AC028E /* FirebaseFirestoreSwift */; };
 		9934A1292B7A6CFA00AC028E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9934A1282B7A6CFA00AC028E /* FirebaseStorage */; };
 		9934A12B2B7A70C400AC028E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9934A12A2B7A70C300AC028E /* GoogleService-Info.plist */; };
+		99B1A7312BA889A100E437FA /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B1A7302BA889A000E437FA /* WorkoutGraph.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		9934A10F2B7A699800AC028E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9934A1122B7A699800AC028E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9934A12A2B7A70C300AC028E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		99B1A7302BA889A000E437FA /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				516081CF2B7D17FD0005AFC5 /* Profile.swift */,
 				516081CD2B7D17D20005AFC5 /* Workouts.swift */,
 				515355C12B98E90200938EC6 /* AllExercisesView.swift */,
+				99B1A7302BA889A000E437FA /* WorkoutGraph.swift */,
 				5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */,
 				516081CB2B7D15370005AFC5 /* Login.swift */,
 				9934A10F2B7A699800AC028E /* Assets.xcassets */,
@@ -246,6 +249,7 @@
 			files = (
 				516081CC2B7D15370005AFC5 /* Login.swift in Sources */,
 				516081D22B7D18340005AFC5 /* SignUp.swift in Sources */,
+				99B1A7312BA889A100E437FA /* WorkoutGraph.swift in Sources */,
 				516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */,
 				9934A10E2B7A699400AC028E /* ContentView.swift in Sources */,
 				9934A10C2B7A699400AC028E /* AmpUpApp.swift in Sources */,
@@ -514,7 +518,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
+				minimumVersion = 10.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
