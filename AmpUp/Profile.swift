@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import Charts
 //struct UserProfile {
 //    var name: String
 //    var age: Int

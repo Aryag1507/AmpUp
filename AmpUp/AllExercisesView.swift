@@ -18,56 +18,57 @@ struct AllExercisesView: View {
     @State private var searchText = ""
 
     var body: some View {
-           VStack(spacing: 0) {
-               // Custom Search Bar
-               HStack {
-                   Image(systemName: "magnifyingglass")
-                       .foregroundColor(.gray)
-                       .padding(.leading, 8)
-                   TextField("Search exercises", text: $searchText)
-                       .disableAutocorrection(true)
-                       .autocapitalization(.none)
-                       .padding(.vertical, 8)
-                       .padding(.leading, 0)
-                       .padding(.trailing)
-               }
-               .padding(.horizontal)
-               .frame(height: 36)
-               .background(Color(.systemGray6))
-               .cornerRadius(8)
-               .padding(.horizontal)
-               .padding(.bottom, 10)
-
-               // List of Exercises
-               List(filteredExercises, id: \.self) { exercise in
-                   HStack {
-                       Text(exercise)
-                           .foregroundColor(.primary)
-                           .onTapGesture {
-                               viewModel.navigateToPathViewForExercise = exercise
-                               viewModel.isNavigatingToPathView = true
-                           }
-                       Spacer()
-                       Button("Change Group") {
-                           viewModel.selectedExercise = exercise
-                           viewModel.isShowingGroupSelection = true
-                       }
-                       .foregroundColor(.blue)
-                   }
-               }
-               .listStyle(PlainListStyle())
-           }
-           .sheet(isPresented: $viewModel.isShowingGroupSelection) {
-               if let selectedExercise = viewModel.selectedExercise {
-                   GroupSelectionView(exercise: selectedExercise, workoutGroups: $workoutGroups)
-               }
-           }
-           .background(
-               NavigationLink(
-                   destination: BicepCurlsView(exerciseName: viewModel.navigateToPathViewForExercise ?? ""),
-                   isActive: $viewModel.isNavigatingToPathView) { EmptyView() }
-           )
-       }
+        VStack(spacing: 0) {
+            // Custom Search Bar
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                    .padding(.leading, 8)
+                TextField("Search exercises", text: $searchText)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                    .padding(.vertical, 8)
+                    .padding(.leading, 0)
+                    .padding(.trailing)
+            }
+            .padding(.horizontal)
+            .frame(height: 36)
+            .background(Color(.systemGray6))
+            .cornerRadius(8)
+            .padding(.horizontal)
+            .padding(.bottom, 10)
+            
+            // List of Exercises
+            List(filteredExercises, id: \.self) { exercise in
+                HStack {
+                    Text(exercise)
+                        .foregroundColor(.primary)
+                        .onTapGesture {
+                            viewModel.navigateToPathViewForExercise = exercise
+                            viewModel.isNavigatingToPathView = true
+                        }
+                    Spacer()
+                    Button("Change Group") {
+                        viewModel.selectedExercise = exercise
+                        viewModel.isShowingGroupSelection = true
+                    }
+                    .foregroundColor(.blue)
+                }
+            }
+            .listStyle(PlainListStyle())
+            .background(Color.black)
+        }
+        .sheet(isPresented: $viewModel.isShowingGroupSelection) {
+            if let selectedExercise = viewModel.selectedExercise {
+                GroupSelectionView(exercise: selectedExercise, workoutGroups: $workoutGroups)
+            }
+        }
+        .background(
+            NavigationLink(
+                destination: BicepCurlsView(exerciseName: viewModel.navigateToPathViewForExercise ?? ""),
+                isActive: $viewModel.isNavigatingToPathView) { EmptyView() }
+        )
+    }
     
     var filteredExercises: [String] {
         if searchText.isEmpty {
@@ -121,10 +122,15 @@ struct GroupSelectionView: View {
 
 struct AllExercisesView_Previews: PreviewProvider {
     static var previews: some View {
-        AllExercisesView(workoutGroups: .constant([
-            WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
-            WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
-            WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
-        ]))
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            AllExercisesView(workoutGroups: .constant([
+                WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
+                WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
+                WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
+            ]))
+            .padding()
+        }
     }
 }
+

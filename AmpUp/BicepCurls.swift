@@ -52,12 +52,12 @@ struct BicepCurlsView: View {
     @State private var workoutDuration: TimeInterval = 0
 
     var body: some View {
+        ZStack{
+            Color.black.edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
                 Spacer()
                 Spacer()
-
-        
         if let bodyImage = UIImage(named: "bodySilhouette.png") {
             // This will maintain the aspect ratio of the image
             let aspectRatio = bodyImage.size.width / bodyImage.size.height
@@ -77,7 +77,7 @@ struct BicepCurlsView: View {
                     .padding()
                     .background(Color.green)
                     .cornerRadius(10)
-
+                    
                     Button("End Workout") {
                         endWorkout()
                     }
@@ -87,6 +87,7 @@ struct BicepCurlsView: View {
                     .cornerRadius(10)
                 }
             }
+        }
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Workout Completed"),

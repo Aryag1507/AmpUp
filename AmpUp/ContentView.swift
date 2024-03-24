@@ -58,43 +58,52 @@ struct ContentView: View {
     }
     
     var body: some View {
+        ZStack{
+            Color.black.edgesIgnoringSafeArea(.all)
             VStack{
                 HStack{
                     NavigationLink(destination: Profile()) {
                         Text("My Profile")
+                            .foregroundColor(.white)
                             .padding()
                     }
                     NavigationLink(destination: Login()) {
                         Text("Log in")
+                            .foregroundColor(.white)
                             .padding()
                     }
                     NavigationLink(destination: Signup()) {
                         Text("Sign up")
+                            .foregroundColor(.white)
                             .padding()
                     }
                 }
                 
                 Text("Welcome to AmpUp!")
+                    .foregroundColor(.white)
                     .padding()
                     .font(.title)
-                Text("Current Users:")
-                Button("Print Current Users to console"){
-                    print("BUtton pressed!")
-                    printUsers()
-                    
-                }
-                List(names, id: \.self) {name in Text(name)}
-                .onAppear{loadUsers()}
+                
+//                Text("Current Users:")
+//                    .foregroundColor(.white)
+//                Button("Print Current Users to console"){
+//                    print("Button pressed!")
+//                    printUsers()
+//                }
+//                List(names, id: \.self) {name in Text(name)}
+//                    .onAppear{loadUsers()}
+                
                 NavigationLink(destination: Workouts()) {
                     Text("Create Workout")
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.init(red: 0.3, green: 0.3, blue: 0.9))
+                        .background(Color(red: 182/255, green: 4/255, blue: 42/255))
                         .cornerRadius(8)
                 }
                 Spacer()
             }
         }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
