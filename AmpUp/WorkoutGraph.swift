@@ -15,6 +15,7 @@ import Charts
 struct WorkoutGraph: View {
     
     @State public var workoutData: [Int] = []
+    @State public var dataPeak: Int = 0
     
     private func startWorkout() {
         let db = Firestore.firestore()
@@ -89,6 +90,7 @@ struct WorkoutGraph: View {
                 let intWorkoutsArray = nsArray.compactMap { $0 as? Int }
                 //print("Converted array of integers:", intWorkoutsArray)
                 self.workoutData = intWorkoutsArray
+                self.dataPeak = intWorkoutsArray.last ?? 0
             }
             
             print(self.workoutData)
@@ -99,18 +101,29 @@ struct WorkoutGraph: View {
     
     struct LineChart: View {
         var workoutData: [Int]
+        var dataPeak: Int
+        //var slidingWindow = workoutData.suffix(25)
+        var peakMax: Int = 16383
         
         var body: some View {
             if #available(iOS 16.0, *) {
-                Chart() {
-                    ForEach(Array(workoutData.enumerated()), id: \.offset) {index,datapoint in
-                        LineMark(
-                            x: .value("Time", index),
-                            y: .value("Microvolts", datapoint)
-                        )
-                    }
+                
+                ZStack {
+                    Chart() {
+                        ForEach(Array((workoutData.suffix(25)).enumerated()), id: \.offset) {index,datapoint in
+                            LineMark(
+                                x: .value("Time", index),
+                                y: .value("Microvolts", datapoint)
+                            )
+                        }
 
+                    }
+                    if dataPeak >= peakMax {
+                        Color.green.opacity(0.75)
+                    }
+                    
                 }
+                
             } else {
                 // Fallback on earlier versions
             }
@@ -119,7 +132,7 @@ struct WorkoutGraph: View {
     
     var body: some View {
         
-        LineChart(workoutData: self.workoutData)
+        LineChart(workoutData: self.workoutData, dataPeak: self.dataPeak)
         VStack{
             HStack{
                 Button(action: startWorkout) {
