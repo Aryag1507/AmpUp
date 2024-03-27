@@ -44,8 +44,31 @@ struct WorkoutGraph: View {
             }
         }
         
+        // Generate a timestamp for the workout session
+        let timestamp = Timestamp(date: Date())
+        
+        // Add the workout data to the map
+        let workoutSessionData: [String: Any] = [
+            "timestamp": timestamp,
+            "workoutData": self.workoutData
+        ]
+        
+        // Create a new document under the "workouts" map with a unique ID
+        let workoutSessionRef = db.collection("users").document("dummy3")
+            .collection("workouts").document()
+        
+        // Set the workout session data under the new document
+        workoutSessionRef.setData(workoutSessionData) { error in
+            if let error = error {
+                print("Error writing document: \(error)")
+            } else {
+                print("Workout session added to Firestore!")
+            }
+        }
+        
         self.workoutData = []
     }
+
     
     
     private func listenToWorkout() {
