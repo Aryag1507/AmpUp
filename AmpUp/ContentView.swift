@@ -2,7 +2,7 @@
 //  Login.swift
 //  AmpUp
 //
-//  Created by Arya Gupta on 2/14/24.
+//  Created by Jack Sanchez on 3/28/24.
 //
 
 import SwiftUI
