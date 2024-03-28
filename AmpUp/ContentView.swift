@@ -37,7 +37,8 @@ struct ContentView: View {
                         ZStack{
                             VStack(spacing: 16.0){
                                 InputFieldView(data: $username, title: "Email")
-                                InputFieldView(data: $password, title: "Password")
+                                SecureInputFieldView(data: $password, title: "Password")
+
                             }
                             .padding(.bottom, 16)
                             .background(Color.black)
@@ -111,43 +112,6 @@ struct ContentView: View {
         }
     }
 }
-
-
-struct InputFieldView: View {
-    @Binding var data: String
-    var title: String?
-    
-    var body: some View {
-        ZStack {
-            Color.black // Set the background color of the ZStack to black
-                .frame(height: 42)
-                .cornerRadius(4)
-            TextField("", text: $data)
-                .padding(.horizontal, 10)
-                .foregroundColor(.white) // Set text color to white
-                .frame(height: 42)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-            HStack {
-                Text(title ?? "Input")
-                    .font(.headline)
-                    .fontWeight(.thin)
-                    .foregroundColor(.white) // Set text color to white
-                    .multilineTextAlignment(.leading)
-                    .padding(4)
-                Spacer()
-            }
-            .padding(.leading, 8)
-            .offset(CGSize(width: 0, height: -20))
-        }
-        .padding(4)
-    }
-}
-
 
 
 struct LoginError: Identifiable {
