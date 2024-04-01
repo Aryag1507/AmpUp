@@ -37,9 +37,16 @@ struct AmpUpApp: App {
     var body: some Scene {
         WindowGroup {
             if appState.isLoggedIn {
-                // Assuming Workouts is your main content view
-                NavigationView {
-                        Workouts().environmentObject(appState)
+                // Assuming Previous Workouts is your main content view
+                TabView {
+                    PreviousWorkouts().environmentObject(appState)
+                        .tabItem {
+                            Label("Home", systemImage: "house")
+                        }
+                    Profile()
+                        .tabItem {
+                            Label("Profile", systemImage: "person.circle")
+                        }
                       }
             } else {
                 // Your login or signup view

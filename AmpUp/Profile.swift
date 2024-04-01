@@ -60,18 +60,18 @@ struct Profile: View {
                     }
                 }
                 
-                NavigationLink(destination: PreviousWorkouts()) {
-                    Text("My Previous Workouts")
-                        .bold()
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color(red: 182/255, green: 4/255, blue: 42/255))
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
-                }
+//                NavigationLink(destination: PreviousWorkouts()) {
+//                    Text("My Previous Workouts")
+//                        .bold()
+//                        .padding()
+//                        .foregroundColor(.white)
+//                        .background(Color(red: 182/255, green: 4/255, blue: 42/255))
+//                        .cornerRadius(10)
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: 8)
+//                                .stroke(Color.white, lineWidth: 2)
+//                        )
+//                }
                 
                 Spacer()
                 Button("Sign Out") {
@@ -111,70 +111,6 @@ struct EditProfile: View {
                     .padding()
                 Spacer()
             }
-        }
-    }
-}
-
-
-struct PreviousWorkouts: View {
-    @State private var workoutData: [[Int]] = [] // Array to hold workout data
-    
-    var body: some View {
-        ScrollView{
-            ZStack {
-                Color.black.edgesIgnoringSafeArea(.all)
-                
-                VStack {
-                    ForEach(workoutData.indices, id: \.self) { index in
-                        // Display a chart for each set of workout data
-                        LineChart(workoutData: workoutData[index])
-                            .frame(height: 200) // Adjust the height as needed
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    // Fetch workout data from Firestore when the view appears
-                    fetchWorkoutData()
-                }
-            }
-        }
-    }
-    
-    func fetchWorkoutData() {
-        let db = Firestore.firestore()
-        let userID = "dummy3" // Replace with actual user ID
-        
-        db.collection("users").document(userID).collection("workouts").getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                for document in querySnapshot!.documents {
-                    if let workoutArray = document.data()["workoutData"] as? [Int] {
-                        // Append workout data to the array
-                        workoutData.append(workoutArray)
-                    }
-                }
-            }
-        }
-    }
-}
-
-struct LineChart: View {
-    var workoutData: [Int]
-    
-    var body: some View {
-        if #available(iOS 16.0, *) {
-            Chart() {
-                ForEach(Array(workoutData.enumerated()), id: \.offset) {index,datapoint in
-                    LineMark(
-                        x: .value("Time", index),
-                        y: .value("Microvolts", datapoint)
-                    )
-                }
-
-            }
-        } else {
-            // Fallback on earlier versions
         }
     }
 }

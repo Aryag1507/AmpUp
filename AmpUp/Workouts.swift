@@ -14,7 +14,7 @@ struct Workouts: View {
         WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
     ]
     @State private var showingAddWorkoutView = false
-
+    
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
@@ -49,20 +49,18 @@ struct Workouts: View {
                     .padding(.horizontal)
                     
                 }
-
+                
                 Spacer()
                 WorkoutGraph()
                 
             }
-            .navigationBarTitle("Workouts", displayMode: .inline)
+            .navigationBarTitle("Create New Workout", displayMode: .inline)
+            // button in navbar to see profile
             .navigationBarItems(
-                leading: NavigationLink(destination: Profile().environmentObject(appState)) {
-                    Image(systemName: "person.crop.circle")
-                        .foregroundColor(.white)
-                },
                 trailing: Button(action: {
                     // Placeholder for navigation action if needed
                 }) {
+                    // button in navbar to see all workouts
                     NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups).environmentObject(appState)) {
                         Image(systemName: "list.bullet")
                             .foregroundColor(.white)
@@ -72,35 +70,6 @@ struct Workouts: View {
             .sheet(isPresented: $showingAddWorkoutView) {
                 AddWorkoutGroupView(workoutGroups: $workoutGroups)
             }
-        }
-    }
-    
-    // Example view for adding a new workout group. Replace with your actual view or form
-    struct AddWorkoutGroupView: View {
-        @Binding var workoutGroups: [WorkoutGroup]
-        @State private var newTitle = ""
-        @Environment(\.presentationMode) var presentationMode
-        
-        var body: some View {
-            NavigationView {
-                Form {
-                    TextField("Workout Group Title", text: $newTitle)
-                    Button("Add") {
-                        addNewWorkoutGroup()
-                    }
-                }
-                .navigationBarTitle("Add Workout Group", displayMode: .inline)
-                .navigationBarItems(trailing: Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
-                })
-            }
-        }
-        
-        private func addNewWorkoutGroup() {
-            guard !newTitle.isEmpty else { return }
-            let newGroup = WorkoutGroup(title: newTitle, exercises: [])
-            workoutGroups.append(newGroup)
-            presentationMode.wrappedValue.dismiss()
         }
     }
 }
