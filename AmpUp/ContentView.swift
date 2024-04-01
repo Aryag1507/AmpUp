@@ -17,10 +17,10 @@ struct ContentView: View {
     @State private var showingContentView: Bool = false // Track if ContentView should be shown
     
     var body: some View {
+        ScrollView {
         NavigationView {
             ZStack{
                 Color.black.edgesIgnoringSafeArea(.all)
-                ScrollView {
                     VStack {
                         // Logo
                         Image("logoWhite")
