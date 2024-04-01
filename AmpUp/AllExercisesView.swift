@@ -56,7 +56,7 @@ struct AllExercisesView: View {
                 }
             }
             .listStyle(PlainListStyle())
-            .background(Color.black)
+//            .background("Background")
         }
         .sheet(isPresented: $viewModel.isShowingGroupSelection) {
             if let selectedExercise = viewModel.selectedExercise {
@@ -123,7 +123,7 @@ struct GroupSelectionView: View {
 struct AllExercisesView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
+            Color("Background").edgesIgnoringSafeArea(.all)
             AllExercisesView(workoutGroups: .constant([
                 WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
                 WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),

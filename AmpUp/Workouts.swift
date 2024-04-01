@@ -17,8 +17,6 @@ struct Workouts: View {
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
-            
             VStack {
                 ScrollView {
                     ForEach(workoutGroups) { group in
@@ -49,21 +47,21 @@ struct Workouts: View {
                     .padding(.horizontal)
                     
                 }
+                // MOVE TO BicepCurls.swift
                 
                 Spacer()
                 WorkoutGraph()
                 
             }
             .navigationBarTitle("Create New Workout", displayMode: .inline)
-            // button in navbar to see profile
+
             .navigationBarItems(
                 trailing: Button(action: {
                     // Placeholder for navigation action if needed
                 }) {
-                    // button in navbar to see all workouts
+                    // bullet list button to see all exercises
                     NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups).environmentObject(appState)) {
                         Image(systemName: "list.bullet")
-                            .foregroundColor(.white)
                     }
                 }
             )

@@ -27,8 +27,6 @@ struct Profile: View {
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all) // Set black background for the entire page
-            
             VStack(alignment: .center, spacing: 40) {
                 Spacer().frame(height: 20) // Move VStack slightly down
                 
@@ -42,7 +40,7 @@ struct Profile: View {
                 
                 HStack {
                     TextField("Enter your name", text: $profileName)
-                        .foregroundColor(.white)
+//                        .foregroundColor(.white)
                         .font(.system(size: 36))
                     
                     Spacer().frame(width: 50) // Add spacer to adjust spacing between "John Doe" and "Edit"
@@ -50,12 +48,12 @@ struct Profile: View {
                     NavigationLink(destination: EditProfile(profileName: $profileName)) {
                         Text("Edit")
                             .padding()
-                            .foregroundColor(.white)
-                            .background(Color.gray.opacity(0))
+//                            .foregroundColor(.white)
+//                            .background(Color.gray.opacity(0))
                             .cornerRadius(1)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.white, lineWidth: 2)
+                                    .stroke(lineWidth: 2)
                             )
                     }
                 }

@@ -27,8 +27,7 @@ struct PreviousWorkouts: View {
         NavigationView {
             ScrollView {
                 ZStack {
-                    Color.black.edgesIgnoringSafeArea(.all)
-                    
+                
                     VStack {
     //                    Text("Previous Workouts")
     //                        .foregroundColor(.white)
