@@ -17,10 +17,11 @@ struct ContentView: View {
     @State private var showingContentView: Bool = false // Track if ContentView should be shown
     
     var body: some View {
-        ScrollView {
-        NavigationView {
             ZStack{
+                // same login UI for light and dark mode
                 Color.black.edgesIgnoringSafeArea(.all)
+                NavigationView {
+                ScrollView {
                     VStack {
                         // Logo
                         Image("logoWhite")
