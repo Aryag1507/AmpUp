@@ -50,7 +50,7 @@ struct Workouts: View {
                 // MOVE TO BicepCurls.swift
                 
                 Spacer()
-                WorkoutGraph()
+                WorkoutGraph(firestoreService: FirestoreService())
                 
             }
             .navigationBarTitle("Create New Workout", displayMode: .inline)

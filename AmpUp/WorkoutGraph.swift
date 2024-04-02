@@ -9,35 +9,29 @@ import SwiftUI
 import FirebaseFirestore
 import Charts
 
-
-
-
 struct WorkoutGraph: View {
     
     @State public var workoutData: [Int] = []
     @State public var dataPeak: Int = 0
     
-    private func startWorkout() {
-        let db = Firestore.firestore()
-        let pkg: [String: Any] = [
-            "state": "start"
-        ]
-        db.collection("start_stop").document("0").setData(pkg) { error in
+    var firestoreService: FirestoreServiceProtocol
+    
+    func startWorkout() {
+        let pkg: [String: Any] = ["state": "start"]
+        firestoreService.setData(for: "0", in: "start_stop", data: pkg) { error in
             if let error = error {
                 print("Error writing document: \(error)")
             } else {
                 print("Started workout!")
+                // Assuming listenToWorkout doesn't need to change for this example
                 listenToWorkout()
             }
         }
     }
 
-    private func endWorkout() {
-        let db = Firestore.firestore()
-        let pkg: [String: Any] = [
-            "state": "stop"
-        ]
-        db.collection("start_stop").document("0").setData(pkg) { error in
+    func endWorkout() {
+        let pkg: [String: Any] = ["state": "stop"]
+        firestoreService.setData(for: "0", in: "start_stop", data: pkg) { error in
             if let error = error {
                 print("Error writing document: \(error)")
             } else {
@@ -45,58 +39,42 @@ struct WorkoutGraph: View {
             }
         }
         
-        // Generate a timestamp for the workout session
-        let timestamp = Timestamp(date: Date())
+        // Assuming Timestamp is understood in your context, or you have a way to serialize Date to your needed format.
+        let timestamp = Date() // Simplified for context. You might need to adjust depending on your FirestoreService implementation.
         
-        // Add the workout data to the map
         let workoutSessionData: [String: Any] = [
             "timestamp": timestamp,
             "workoutData": self.workoutData
         ]
         
-        // Create a new document under the "workouts" map with a unique ID
-        let workoutSessionRef = db.collection("users").document("dummy3")
-            .collection("workouts").document()
-        
-        // Set the workout session data under the new document
-        workoutSessionRef.setData(workoutSessionData) { error in
+        firestoreService.addData(to: "users/dummy3/workouts", data: workoutSessionData) { error, documentID in
             if let error = error {
                 print("Error writing document: \(error)")
-            } else {
-                print("Workout session added to Firestore!")
+            } else if let documentID = documentID {
+                print("Workout session added to Firestore with ID: \(documentID)")
             }
+            self.workoutData = []
         }
-        
-        self.workoutData = []
     }
-
     
-    
-    private func listenToWorkout() {
-        let db = Firestore.firestore()
-        let userRef = db.collection("users").document("0")
-        
-        userRef.addSnapshotListener { documentSnapshot, error in
-            guard let document = documentSnapshot else {
-              print("Error fetching document: \(error!)")
-              return
+    func listenToWorkout() {
+        firestoreService.listenToDocument(in: "users", document: "0") { data, error in
+            if let error = error {
+                print("Error fetching document: \(error)")
+                return
             }
-            guard let data = document.data() else {
-              print("Document data was empty.")
-              return
+            guard let data = data else {
+                print("Document data was empty.")
+                return
             }
             if let nsArray = data["workouts"] as? NSArray {
-                //get everything from NS_ArrayM to [Int]
                 let intWorkoutsArray = nsArray.compactMap { $0 as? Int }
-                //print("Converted array of integers:", intWorkoutsArray)
                 self.workoutData = intWorkoutsArray
                 self.dataPeak = intWorkoutsArray.last ?? 0
             }
             
             print(self.workoutData)
-          }
-        
-
+        }
     }
     
     struct LineChart: View {
@@ -159,6 +137,6 @@ struct WorkoutGraph: View {
 
 struct WorkoutGraph_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutGraph()
+        WorkoutGraph(firestoreService: FirestoreService())
     }
 }
