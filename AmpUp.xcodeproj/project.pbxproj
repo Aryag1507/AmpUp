@@ -9,7 +9,12 @@
 /* Begin PBXBuildFile section */
 		5148F50B2B99790B00B4EBA8 /* BicepCurls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */; };
 		515355C22B98E90200938EC6 /* AllExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515355C12B98E90200938EC6 /* AllExercisesView.swift */; };
-		516081CC2B7D15370005AFC5 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CB2B7D15370005AFC5 /* Login.swift */; };
+		515EA76C2BBB3F8C00225FA3 /* AddWorkoutGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA7672BBB3F8C00225FA3 /* AddWorkoutGroupView.swift */; };
+		515EA76D2BBB3F8C00225FA3 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA7682BBB3F8C00225FA3 /* InputFieldView.swift */; };
+		515EA76E2BBB3F8C00225FA3 /* PreviousWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA7692BBB3F8C00225FA3 /* PreviousWorkouts.swift */; };
+		515EA76F2BBB3F8C00225FA3 /* SecureInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA76A2BBB3F8C00225FA3 /* SecureInputFieldView.swift */; };
+		515EA7772BBB67C500225FA3 /* AmpUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA7762BBB67C500225FA3 /* AmpUpTests.swift */; };
+		515EA77F2BBB69F600225FA3 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA77D2BBB69E800225FA3 /* FirestoreService.swift */; };
 		516081CE2B7D17D20005AFC5 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CD2B7D17D20005AFC5 /* Workouts.swift */; };
 		516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CF2B7D17FD0005AFC5 /* Profile.swift */; };
 		516081D22B7D18340005AFC5 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081D12B7D18340005AFC5 /* SignUp.swift */; };
@@ -30,7 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		519B30802BAB296E00AFBC9E /* PBXContainerItemProxy */ = {
+		515EA7782BBB67C500225FA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9934A1002B7A699300AC028E /* Project object */;
 			proxyType = 1;
@@ -42,11 +47,16 @@
 /* Begin PBXFileReference section */
 		5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicepCurls.swift; sourceTree = "<group>"; };
 		515355C12B98E90200938EC6 /* AllExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExercisesView.swift; sourceTree = "<group>"; };
-		516081CB2B7D15370005AFC5 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		515EA7672BBB3F8C00225FA3 /* AddWorkoutGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWorkoutGroupView.swift; sourceTree = "<group>"; };
+		515EA7682BBB3F8C00225FA3 /* InputFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
+		515EA7692BBB3F8C00225FA3 /* PreviousWorkouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousWorkouts.swift; sourceTree = "<group>"; };
+		515EA76A2BBB3F8C00225FA3 /* SecureInputFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureInputFieldView.swift; sourceTree = "<group>"; };
+		515EA7742BBB67C500225FA3 /* AmpUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmpUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		515EA7762BBB67C500225FA3 /* AmpUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpTests.swift; sourceTree = "<group>"; };
+		515EA77D2BBB69E800225FA3 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		516081CD2B7D17D20005AFC5 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
 		516081CF2B7D17FD0005AFC5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		516081D12B7D18340005AFC5 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
-		519B307C2BAB296E00AFBC9E /* AmpUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmpUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9934A1082B7A699400AC028E /* AmpUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmpUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9934A10B2B7A699400AC028E /* AmpUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpApp.swift; sourceTree = "<group>"; };
 		9934A10D2B7A699400AC028E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,7 +67,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		519B30792BAB296E00AFBC9E /* Frameworks */ = {
+		515EA7712BBB67C500225FA3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -82,10 +92,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		515EA76B2BBB3F8C00225FA3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				515EA7672BBB3F8C00225FA3 /* AddWorkoutGroupView.swift */,
+				515EA7682BBB3F8C00225FA3 /* InputFieldView.swift */,
+				515EA7692BBB3F8C00225FA3 /* PreviousWorkouts.swift */,
+				515EA76A2BBB3F8C00225FA3 /* SecureInputFieldView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		515EA7752BBB67C500225FA3 /* AmpUpTests */ = {
+			isa = PBXGroup;
+			children = (
+				515EA7762BBB67C500225FA3 /* AmpUpTests.swift */,
+			);
+			path = AmpUpTests;
+			sourceTree = "<group>";
+		};
 		9934A0FF2B7A699300AC028E = {
 			isa = PBXGroup;
 			children = (
 				9934A10A2B7A699400AC028E /* AmpUp */,
+				515EA7752BBB67C500225FA3 /* AmpUpTests */,
 				9934A1092B7A699400AC028E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				9934A1082B7A699400AC028E /* AmpUp.app */,
-				519B307C2BAB296E00AFBC9E /* AmpUpTests.xctest */,
+				515EA7742BBB67C500225FA3 /* AmpUpTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,13 +135,14 @@
 				9934A12A2B7A70C300AC028E /* GoogleService-Info.plist */,
 				9934A10B2B7A699400AC028E /* AmpUpApp.swift */,
 				9934A10D2B7A699400AC028E /* ContentView.swift */,
+				515EA77D2BBB69E800225FA3 /* FirestoreService.swift */,
 				516081D12B7D18340005AFC5 /* SignUp.swift */,
 				516081CF2B7D17FD0005AFC5 /* Profile.swift */,
 				516081CD2B7D17D20005AFC5 /* Workouts.swift */,
 				515355C12B98E90200938EC6 /* AllExercisesView.swift */,
+				515EA76B2BBB3F8C00225FA3 /* Views */,
 				99B1A7302BA889A000E437FA /* WorkoutGraph.swift */,
 				5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */,
-				516081CB2B7D15370005AFC5 /* Login.swift */,
 				9934A10F2B7A699800AC028E /* Assets.xcassets */,
 				9934A1112B7A699800AC028E /* Preview Content */,
 			);
@@ -129,22 +160,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		519B307B2BAB296E00AFBC9E /* AmpUpTests */ = {
+		515EA7732BBB67C500225FA3 /* AmpUpTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 519B30842BAB296E00AFBC9E /* Build configuration list for PBXNativeTarget "AmpUpTests" */;
+			buildConfigurationList = 515EA77A2BBB67C500225FA3 /* Build configuration list for PBXNativeTarget "AmpUpTests" */;
 			buildPhases = (
-				519B30782BAB296E00AFBC9E /* Sources */,
-				519B30792BAB296E00AFBC9E /* Frameworks */,
-				519B307A2BAB296E00AFBC9E /* Resources */,
+				515EA7702BBB67C500225FA3 /* Sources */,
+				515EA7712BBB67C500225FA3 /* Frameworks */,
+				515EA7722BBB67C500225FA3 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				519B30812BAB296E00AFBC9E /* PBXTargetDependency */,
+				515EA7792BBB67C500225FA3 /* PBXTargetDependency */,
 			);
 			name = AmpUpTests;
 			productName = AmpUpTests;
-			productReference = 519B307C2BAB296E00AFBC9E /* AmpUpTests.xctest */;
+			productReference = 515EA7742BBB67C500225FA3 /* AmpUpTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		9934A1072B7A699400AC028E /* AmpUp */ = {
@@ -181,11 +212,11 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
-					519B307B2BAB296E00AFBC9E = {
-						CreatedOnToolsVersion = 13.4.1;
+					515EA7732BBB67C500225FA3 = {
+						CreatedOnToolsVersion = 15.3;
 						TestTargetID = 9934A1072B7A699400AC028E;
 					};
 					9934A1072B7A699400AC028E = {
@@ -210,13 +241,13 @@
 			projectRoot = "";
 			targets = (
 				9934A1072B7A699400AC028E /* AmpUp */,
-				519B307B2BAB296E00AFBC9E /* AmpUpTests */,
+				515EA7732BBB67C500225FA3 /* AmpUpTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		519B307A2BAB296E00AFBC9E /* Resources */ = {
+		515EA7722BBB67C500225FA3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -236,10 +267,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		519B30782BAB296E00AFBC9E /* Sources */ = {
+		515EA7702BBB67C500225FA3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				515EA7772BBB67C500225FA3 /* AmpUpTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,14 +279,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				516081CC2B7D15370005AFC5 /* Login.swift in Sources */,
 				516081D22B7D18340005AFC5 /* SignUp.swift in Sources */,
+				515EA76E2BBB3F8C00225FA3 /* PreviousWorkouts.swift in Sources */,
 				99B1A7312BA889A100E437FA /* WorkoutGraph.swift in Sources */,
+				515EA77F2BBB69F600225FA3 /* FirestoreService.swift in Sources */,
 				516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */,
 				9934A10E2B7A699400AC028E /* ContentView.swift in Sources */,
 				9934A10C2B7A699400AC028E /* AmpUpApp.swift in Sources */,
 				515355C22B98E90200938EC6 /* AllExercisesView.swift in Sources */,
+				515EA76F2BBB3F8C00225FA3 /* SecureInputFieldView.swift in Sources */,
+				515EA76C2BBB3F8C00225FA3 /* AddWorkoutGroupView.swift in Sources */,
 				516081CE2B7D17D20005AFC5 /* Workouts.swift in Sources */,
+				515EA76D2BBB3F8C00225FA3 /* InputFieldView.swift in Sources */,
 				5148F50B2B99790B00B4EBA8 /* BicepCurls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,49 +298,60 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		519B30812BAB296E00AFBC9E /* PBXTargetDependency */ = {
+		515EA7792BBB67C500225FA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9934A1072B7A699400AC028E /* AmpUp */;
-			targetProxy = 519B30802BAB296E00AFBC9E /* PBXContainerItemProxy */;
+			targetProxy = 515EA7782BBB67C500225FA3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		519B30822BAB296E00AFBC9E /* Debug */ = {
+		515EA77B2BBB67C500225FA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D2XK6X8N8F;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AmpUpTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmpUp.app/AmpUp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmpUp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AmpUp";
 			};
 			name = Debug;
 		};
-		519B30832BAB296E00AFBC9E /* Release */ = {
+		515EA77C2BBB67C500225FA3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D2XK6X8N8F;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AmpUpTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmpUp.app/AmpUp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmpUp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AmpUp";
 			};
 			name = Release;
 		};
@@ -483,11 +530,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		519B30842BAB296E00AFBC9E /* Build configuration list for PBXNativeTarget "AmpUpTests" */ = {
+		515EA77A2BBB67C500225FA3 /* Build configuration list for PBXNativeTarget "AmpUpTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				519B30822BAB296E00AFBC9E /* Debug */,
-				519B30832BAB296E00AFBC9E /* Release */,
+				515EA77B2BBB67C500225FA3 /* Debug */,
+				515EA77C2BBB67C500225FA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
