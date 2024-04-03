@@ -61,21 +61,22 @@ struct PreviousWorkouts: View {
         let db = Firestore.firestore()
         let userID = "dummy7" // Replace with actual user ID
         
-        db.collection("users").document(userID).collection("workouts").getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                var fetchedDataWithTitles: [(title: String, data: [Int])] = []
-                for document in querySnapshot!.documents {
-                    if let workoutArray = document.data()["workoutData"] as? [Int],
-                       let title = document.data()["title"] as? String {
-                        // Append workout data with title to the array
-                        fetchedDataWithTitles.append((title: title, data: workoutArray))
+        db.collection("users").document(userID).collection("workouts")
+            .order(by: "timestamp", descending: true)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    var fetchedDataWithTitles: [(title: String, data: [Int])] = []
+                    for document in querySnapshot!.documents {
+                        if let workoutArray = document.data()["workoutData"] as? [Int],
+                           let title = document.data()["title"] as? String {
+                            fetchedDataWithTitles.append((title: title, data: workoutArray))
+                        }
                     }
+                    self.workoutDataWithTitles = fetchedDataWithTitles
                 }
-                self.workoutDataWithTitles = fetchedDataWithTitles
             }
-        }
     }
 }
 
