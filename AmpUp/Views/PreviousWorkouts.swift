@@ -22,21 +22,111 @@ struct PreviousWorkouts: View {
         WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
     ]
     @State private var showingAddWorkoutView = false
+    let MAX_EMG_VAL = 16383
+    
+    func getNumberReps(rawData: [Int]) -> Int{
+            //we want to find number local maximums
+            // we need a threshold to determine when to classify a spike as a rep, or else the noise will be classified as such
+            
+            //window -> [1,2,1,3,1,400,300,32,1]
+
+            let threshold = 2000
+            var left = 0
+            var right = 1
+            var res = 0
+            var thresholdHit = false
+            
+            //if not enough data, return
+            if rawData.count <= 2{
+                return 0
+            }
+            var prevValue = -1
+            while right < rawData.count {
+                //two pointer window, if it's increasing keep going, if it starts decreasing and it hasn't jumped a threshold l=r r+1
+
+                var leftVal = rawData[left]
+                var rightVal = rawData[right]
+                
+                
+                //print(leftVal)
+                //print(rightVal)
+                //print(prevValue)
+                if prevValue > rightVal {
+                    //print("previous is smaller")
+                    left = right
+                    prevValue = rightVal
+                    right+=1
+                    thresholdHit = false
+                }
+                else if leftVal < rightVal{
+                    //leftval < rightval, we're increasing. check the threshold. if met count the rep and keep going. if not keep going
+                    if (rightVal - leftVal) > threshold && thresholdHit == false{
+                        //print("increasing, thresholdHit")
+                        res += 1
+                        prevValue = rightVal
+                        right+=1
+                        thresholdHit = true
+                    }else {
+                        //print("increasing, but no threshold")
+                        prevValue = rightVal
+                        //print("prev now", prevValue)
+                        right+=1
+                    }
+                }else{
+                    //otherwise we're decreasing or even. in tihs case, restart the window
+                    //print("locally")
+                    left = right
+                    prevValue = rightVal
+                    right+=1
+                    thresholdHit = false
+                }
+                //print()
+                
+                
+            }
+            
+            return res
+            
+            
+        }
+    
+    func getNumberMaxReps(rawData: [Int]) -> Int {
+        //find number of times we max out
+        var res = 0
+        for datapoint in rawData {
+            if datapoint == MAX_EMG_VAL {
+                res = res + 1
+            }
+        }
+        
+        return res
+        
+    }
     
     var body: some View {
         NavigationView {
             ScrollView {
                 ZStack {
-                
                     VStack {
-                        ForEach(workoutDataWithTitles, id: \.title) { workoutWithTitles in
-                            // Display the workout title and a chart for each set of workout data
+                        ForEach($workoutDataWithTitles, id: \.title) { workoutWithTitles in
+                            //displaying workout title, number of reps, and the chart
                             VStack {
-                                Text(workoutWithTitles.title)
-                                    .font(.headline)
-                                    .padding(.vertical, 8)
                                 
-                                LineChart(workoutData: workoutWithTitles.data)
+                                HStack {
+                                    Text("Title: " + workoutWithTitles.title.wrappedValue)
+                                        .font(.headline)
+                                        .padding(.vertical, 8)
+                                    Spacer()
+                                    // Assuming getNumberReps returns an Int
+                                    Text("Reps: " + String(getNumberReps(rawData: workoutWithTitles.data.wrappedValue)))
+                                        .font(.headline)
+                                        .padding(.vertical,8)
+                                }.padding(16)
+
+                                
+                                
+                                
+                                LineChart(workoutData: workoutWithTitles.data.wrappedValue)
                                     .frame(height: 200) // Adjust the height as needed
                                     .padding()
                             }
