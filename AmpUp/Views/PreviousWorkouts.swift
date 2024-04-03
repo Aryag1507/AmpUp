@@ -15,7 +15,7 @@ import FirebaseFirestore
 
 struct PreviousWorkouts: View {
     @EnvironmentObject var appState: AppState
-    @State private var workoutData: [[Int]] = [] // Array to hold workout data
+    @State private var workoutDataWithTitles: [(title: String, data: [Int])] = []
     @State private var workoutGroups: [WorkoutGroup] = [
         WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
         WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
@@ -29,16 +29,17 @@ struct PreviousWorkouts: View {
                 ZStack {
                 
                     VStack {
-    //                    Text("Previous Workouts")
-    //                        .foregroundColor(.white)
-    //                        .bold()
-    //                        .font(.title)
-                        
-                        ForEach(workoutData.indices, id: \.self) { index in
-                            // Display a chart for each set of workout data
-                            LineChart(workoutData: workoutData[index])
-                                .frame(height: 200) // Adjust the height as needed
-                                .padding()
+                        ForEach(workoutDataWithTitles, id: \.title) { workoutWithTitles in
+                            // Display the workout title and a chart for each set of workout data
+                            VStack {
+                                Text(workoutWithTitles.title)
+                                    .font(.headline)
+                                    .padding(.vertical, 8)
+                                
+                                LineChart(workoutData: workoutWithTitles.data)
+                                    .frame(height: 200) // Adjust the height as needed
+                                    .padding()
+                            }
                         }
                     }
                     .onAppear {
@@ -58,18 +59,21 @@ struct PreviousWorkouts: View {
     
     func fetchWorkoutData() {
         let db = Firestore.firestore()
-        let userID = "dummy3" // Replace with actual user ID
+        let userID = "dummy7" // Replace with actual user ID
         
         db.collection("users").document(userID).collection("workouts").getDocuments { querySnapshot, error in
             if let error = error {
                 print("Error getting documents: \(error)")
             } else {
+                var fetchedDataWithTitles: [(title: String, data: [Int])] = []
                 for document in querySnapshot!.documents {
-                    if let workoutArray = document.data()["workoutData"] as? [Int] {
-                        // Append workout data to the array
-                        workoutData.append(workoutArray)
+                    if let workoutArray = document.data()["workoutData"] as? [Int],
+                       let title = document.data()["title"] as? String {
+                        // Append workout data with title to the array
+                        fetchedDataWithTitles.append((title: title, data: workoutArray))
                     }
                 }
+                self.workoutDataWithTitles = fetchedDataWithTitles
             }
         }
     }

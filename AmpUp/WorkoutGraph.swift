@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Charts
 
 struct WorkoutGraph: View {
-    
+    @State private var workoutTitle: String = ""
     @State public var workoutData: [Int] = []
     @State public var dataPeak: Int = 0
     
@@ -44,10 +44,11 @@ struct WorkoutGraph: View {
         
         let workoutSessionData: [String: Any] = [
             "timestamp": timestamp,
-            "workoutData": self.workoutData
+            "workoutData": self.workoutData,
+            "title": self.workoutTitle
         ]
         
-        firestoreService.addData(to: "users/dummy3/workouts", data: workoutSessionData) { error, documentID in
+        firestoreService.addData(to: "users/dummy7/workouts", data: workoutSessionData) { error, documentID in
             if let error = error {
                 print("Error writing document: \(error)")
             } else if let documentID = documentID {
@@ -112,6 +113,10 @@ struct WorkoutGraph: View {
         
         LineChart(workoutData: self.workoutData, dataPeak: self.dataPeak)
         VStack{
+            TextField("Workout Title", text: $workoutTitle) // Text field for user input
+                .padding()
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
             HStack{
                 Button(action: startWorkout) {
                     Text("Start Workout")
