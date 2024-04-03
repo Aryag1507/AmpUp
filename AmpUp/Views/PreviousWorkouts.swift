@@ -46,12 +46,7 @@ struct PreviousWorkouts: View {
                         // Fetch workout data from Firestore when the view appears
                         fetchWorkoutData()
                     }
-                    .navigationTitle("My Previous Workouts")
-                    .toolbar {
-                        NavigationLink(destination: Workouts().environmentObject(appState)) {
-                            Image(systemName: "plus")
-                        }
-                    }
+                    .navigationTitle("My Workout History")
                 }
             }
         }

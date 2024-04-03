@@ -39,7 +39,7 @@ struct AmpUpApp: App {
             if appState.isLoggedIn {
                 // Assuming Previous Workouts is your main content view
                 TabView {
-                    PreviousWorkouts().environmentObject(appState)
+                    DashboardView().environmentObject(appState)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
