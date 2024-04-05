@@ -24,7 +24,7 @@ struct PreviousWorkouts: View {
     @State private var showingAddWorkoutView = false
     let MAX_EMG_VAL = 16383
     
-    func getNumberReps(rawData: [Int]) -> Int{
+    func getNumberReps(rawData: [Int]) -> Double{
             //we want to find number local maximums
             // we need a threshold to determine when to classify a spike as a rep, or else the noise will be classified as such
             
@@ -33,7 +33,7 @@ struct PreviousWorkouts: View {
             let threshold = 2000
             var left = 0
             var right = 1
-            var res = 0
+            var res = 0.0
             var thresholdHit = false
             
             //if not enough data, return
@@ -90,13 +90,25 @@ struct PreviousWorkouts: View {
             
         }
     
-    func getNumberMaxReps(rawData: [Int]) -> Int {
+    func getNumberMaxReps(rawData: [Int]) -> Double {
         //find number of times we max out
-        var res = 0
-        for datapoint in rawData {
-            if datapoint == MAX_EMG_VAL {
-                res = res + 1
+        var res = 0.0
+        var i = 0
+        let WINDOW_SIZE = 3
+        if rawData.count < 5 {
+            return 0
+        }else {
+            
+            while i <= rawData.count - 5 {
+                let window = rawData[i...(i + 4)]
+                if window.contains(MAX_EMG_VAL) {
+                    i += 5 // Shift the window by 5 positions
+                    res += 1
+                } else {
+                    i += 1 // If not found, shift the window by 1 position
+                }
             }
+            
         }
         
         return res
@@ -116,12 +128,19 @@ struct PreviousWorkouts: View {
                                     Text("Title: " + workoutWithTitles.title.wrappedValue)
                                         .font(.headline)
                                         .padding(.vertical, 8)
+                                        
                                     Spacer()
-                                    // Assuming getNumberReps returns an Int
-                                    Text("Reps: " + String(getNumberReps(rawData: workoutWithTitles.data.wrappedValue)))
+                                    Text("Reps: " + String(Int(getNumberReps(rawData: workoutWithTitles.data.wrappedValue))))
                                         .font(.headline)
                                         .padding(.vertical,8)
-                                }.padding(16)
+                                    Spacer()
+                                    Text("Optimal Reps: " + String(Int(getNumberMaxReps(rawData: workoutWithTitles.data.wrappedValue))))
+                                        .font(.headline)
+                                        .padding(.vertical,8)
+                                    Spacer()
+                                    Text("Optimization Score: " + "(" + String(format: "%.2f", (getNumberReps(rawData: workoutWithTitles.data.wrappedValue) != 0) ? (getNumberMaxReps(rawData: workoutWithTitles.data.wrappedValue) / getNumberReps(rawData: workoutWithTitles.data.wrappedValue)) * 100 : 0) + "%)")
+
+                                }.padding(8)
 
                                 
                                 

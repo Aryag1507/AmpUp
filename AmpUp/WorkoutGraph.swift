@@ -13,10 +13,13 @@ struct WorkoutGraph: View {
     @State private var workoutTitle: String = ""
     @State public var workoutData: [Int] = []
     @State public var dataPeak: Int = 0
+    @State public var pausedState: Bool = false
+    @State public var isInitialState: Bool = true
     
     var firestoreService: FirestoreServiceProtocol
     
     func startWorkout() {
+        self.isInitialState = false
         let pkg: [String: Any] = ["state": "start"]
         firestoreService.setData(for: "0", in: "start_stop", data: pkg) { error in
             if let error = error {
@@ -27,6 +30,24 @@ struct WorkoutGraph: View {
                 listenToWorkout()
             }
         }
+    }
+    
+    func pauseWorkout() {
+        
+        
+        var pkg: [String: Any] = ["state": "paused"]
+        if self.pausedState == true {
+            pkg = ["state": "start"]
+        }
+        firestoreService.setData(for: "0", in: "start_stop", data: pkg) { error in
+            if let error = error {
+                print("Error writing document: \(error)")
+            } else {
+                print("paused / resumed workout")
+            }
+        }
+        self.pausedState = !self.pausedState
+        
     }
 
     func endWorkout() {
@@ -47,7 +68,8 @@ struct WorkoutGraph: View {
             "workoutData": self.workoutData,
             "title": self.workoutTitle
         ]
-        
+        self.workoutTitle = ""
+        self.workoutData = []
         firestoreService.addData(to: "users/dummy7/workouts", data: workoutSessionData) { error, documentID in
             if let error = error {
                 print("Error writing document: \(error)")
@@ -55,7 +77,9 @@ struct WorkoutGraph: View {
                 print("Workout session added to Firestore with ID: \(documentID)")
             }
             self.workoutData = []
+            
         }
+    
     }
     
     func listenToWorkout() {
@@ -125,6 +149,21 @@ struct WorkoutGraph: View {
                         .background(Color.green)
                         .cornerRadius(10)
                 }
+                
+                (self.isInitialState == true) ? nil :
+                Button(action: pauseWorkout) {
+                    (self.pausedState == false) ? Image(systemName: "pause")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.gray)
+                        .cornerRadius(10) : Image(systemName: "play")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                    
+                }
+                
                 Button(action: endWorkout) {
                     Text("End Workout")
                         .foregroundColor(.white)
