@@ -51,6 +51,11 @@ struct WorkoutGraph: View {
     }
 
     func endWorkout() {
+        
+        if self.workoutData == [] {
+            print("No data to write. Ending")
+            return
+        }
         let pkg: [String: Any] = ["state": "stop"]
         firestoreService.setData(for: "0", in: "start_stop", data: pkg) { error in
             if let error = error {
