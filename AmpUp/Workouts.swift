@@ -78,7 +78,7 @@ struct ExerciseListView: View {
     
     var body: some View {
         List(exercises, id: \.self) { exercise in
-            NavigationLink(destination: BicepCurlsView(exerciseName: exercise)) {
+            NavigationLink(destination: ExerciseShow(exerciseName: exercise)) {
                 Text(exercise)
             }
         }
