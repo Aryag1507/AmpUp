@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5148F50B2B99790B00B4EBA8 /* BicepCurls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */; };
+		5148F50B2B99790B00B4EBA8 /* ExerciseShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148F50A2B99790B00B4EBA8 /* ExerciseShow.swift */; };
 		515355C22B98E90200938EC6 /* AllExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515355C12B98E90200938EC6 /* AllExercisesView.swift */; };
 		515EA76C2BBB3F8C00225FA3 /* AddWorkoutGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA7672BBB3F8C00225FA3 /* AddWorkoutGroupView.swift */; };
 		515EA76D2BBB3F8C00225FA3 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515EA7682BBB3F8C00225FA3 /* InputFieldView.swift */; };
@@ -46,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicepCurls.swift; sourceTree = "<group>"; };
+		5148F50A2B99790B00B4EBA8 /* ExerciseShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseShow.swift; sourceTree = "<group>"; };
 		515355C12B98E90200938EC6 /* AllExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExercisesView.swift; sourceTree = "<group>"; };
 		515EA7672BBB3F8C00225FA3 /* AddWorkoutGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWorkoutGroupView.swift; sourceTree = "<group>"; };
 		515EA7682BBB3F8C00225FA3 /* InputFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 				515355C12B98E90200938EC6 /* AllExercisesView.swift */,
 				515EA76B2BBB3F8C00225FA3 /* Views */,
 				99B1A7302BA889A000E437FA /* WorkoutGraph.swift */,
-				5148F50A2B99790B00B4EBA8 /* BicepCurls.swift */,
+				5148F50A2B99790B00B4EBA8 /* ExerciseShow.swift */,
 				9934A10F2B7A699800AC028E /* Assets.xcassets */,
 				9934A1112B7A699800AC028E /* Preview Content */,
 			);
@@ -295,7 +295,7 @@
 				515EA76C2BBB3F8C00225FA3 /* AddWorkoutGroupView.swift in Sources */,
 				516081CE2B7D17D20005AFC5 /* Workouts.swift in Sources */,
 				515EA76D2BBB3F8C00225FA3 /* InputFieldView.swift in Sources */,
-				5148F50B2B99790B00B4EBA8 /* BicepCurls.swift in Sources */,
+				5148F50B2B99790B00B4EBA8 /* ExerciseShow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
