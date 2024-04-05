@@ -120,7 +120,7 @@ struct PreviousWorkouts: View {
             ScrollView {
                 ZStack {
                     VStack {
-                        ForEach($workoutDataWithTitles, id: \.title) { workoutWithTitles in
+                        ForEach($workoutDataWithTitles, id: \.data) { workoutWithTitles in
                             //displaying workout title, number of reps, and the chart
                             VStack {
                                 
