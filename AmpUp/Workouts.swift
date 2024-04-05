@@ -9,9 +9,9 @@ struct WorkoutGroup: Identifiable {
 struct Workouts: View {
     @EnvironmentObject var appState: AppState
     @State private var workoutGroups: [WorkoutGroup] = [
-        WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions"]),
+        WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions", "Calf Raises"]),
         WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
-        WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
+        WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises", "Tricep Pulldowns"])
     ]
     @State private var showingAddWorkoutView = false
     
