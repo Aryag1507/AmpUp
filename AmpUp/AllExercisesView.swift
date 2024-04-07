@@ -65,7 +65,7 @@ struct AllExercisesView: View {
         }
         .background(
             NavigationLink(
-                destination: BicepCurlsView(exerciseName: viewModel.navigateToPathViewForExercise ?? ""),
+                destination: ExerciseShow(exerciseName: viewModel.navigateToPathViewForExercise ?? ""),
                 isActive: $viewModel.isNavigatingToPathView) { EmptyView() }
         )
     }

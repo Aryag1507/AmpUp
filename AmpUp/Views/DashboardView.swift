@@ -2,7 +2,7 @@
 //  PreviousWorkouts.swift
 //  AmpUp
 //
-//  Created by Jack Sanchez on 3/28/24.
+//  Created by Jack Sanchez on 4/3/24.
 //
 
 import SwiftUI
@@ -13,7 +13,7 @@ import Foundation
 import Charts
 import FirebaseFirestore
 
-struct PreviousWorkouts: View {
+struct DashboardView: View {
     @EnvironmentObject var appState: AppState
     @State private var workoutDataWithTitles: [(title: String, data: [Int])] = []
     @State private var workoutGroups: [WorkoutGroup] = [
@@ -22,8 +22,9 @@ struct PreviousWorkouts: View {
         WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises"])
     ]
     @State private var showingAddWorkoutView = false
-    let MAX_EMG_VAL = 16383
+    @State private var showingAllWorkouts = false
     
+    let MAX_EMG_VAL = 16383
     func getNumberReps(rawData: [Int]) -> Double{
             //we want to find number local maximums
             // we need a threshold to determine when to classify a spike as a rep, or else the noise will be classified as such
@@ -118,52 +119,92 @@ struct PreviousWorkouts: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                ZStack {
+                HStack(spacing: 16) { // Horizontal stack for buttons
+                    // "My Workout History" button
+                    Button(action: {
+                        showingAllWorkouts = true
+                    }) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 175, height: 100)
+                            .foregroundColor(.blue)
+                            .overlay(Text("My Workout History")
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                                .font(Font.system(size: 20, weight: .bold))
+                                .frame(maxWidth: .infinity)
+                            )
+                    }
+                    .sheet(isPresented: $showingAllWorkouts) {
+                        PreviousWorkouts().environmentObject(appState)
+                    }
+                    
+                    // "Compare Workouts" button
+                    NavigationLink(destination: CompareWorkoutsView()) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 175, height: 100) // Square shape
+                            .foregroundColor(Color(red: 182/255, green: 4/255, blue: 42/255))
+                            .overlay(Text("Compare Workouts")
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                                .font(Font.system(size: 20, weight: .bold))
+                                .frame(maxWidth: .infinity)
+                            )
+                    }
+                }
+                .padding(.top, 16)
+                .onAppear {
+                    // Fetch workout data from Firestore when the view appears
+                    fetchWorkoutData()
+                }
+                
+                // Page label and "Create" button
+                .navigationTitle("Workout Dashboard")
+                .toolbar {
+                    NavigationLink(destination: Workouts().environmentObject(appState)) {
+                        Image(systemName: "plus")
+                    }
+                }
+                
+                // Label for recent workouts
+                HStack {
+                    Text("Most Recent Workouts:")
+                        .font(.title)
+                        .padding(.top, 16)
+                        .padding(.horizontal, 16)
+                    
+                    Spacer()
+                }
+                
+                // Display the last 3 workouts
+                ForEach(workoutDataWithTitles.prefix(3), id: \.title) { workoutWithTitles in
+                    // Display the workout title and a chart for each set of workout data
                     VStack {
-                        ForEach($workoutDataWithTitles, id: \.data) { workoutWithTitles in
-                            //displaying workout title, number of reps, and the chart
-                            VStack {
-                                
-                                HStack {
-                                    Text("Title: " + workoutWithTitles.title.wrappedValue)
-                                        .font(.headline)
-                                        .padding(.vertical, 8)
-                                        
-                                    Spacer()
-                                    Text("Reps: " + String(Int(getNumberReps(rawData: workoutWithTitles.data.wrappedValue))))
-                                        .font(.headline)
-                                        .padding(.vertical,8)
-                                    Spacer()
-                                    Text("Optimal Reps: " + String(Int(getNumberMaxReps(rawData: workoutWithTitles.data.wrappedValue))))
-                                        .font(.headline)
-                                        .padding(.vertical,8)
-                                    Spacer()
-                                    Text("Optimization Score: " + "(" + String(format: "%.2f", (getNumberReps(rawData: workoutWithTitles.data.wrappedValue) != 0) ? (getNumberMaxReps(rawData: workoutWithTitles.data.wrappedValue) / getNumberReps(rawData: workoutWithTitles.data.wrappedValue)) * 100 : 0) + "%)")
-
-                                }.padding(8)
-
-                                
-                                
-                                
-                                LineChart(workoutData: workoutWithTitles.data.wrappedValue)
-                                    .frame(height: 200) // Adjust the height as needed
-                                    .padding()
-                            }
+                        Text(workoutWithTitles.title)
+                            .font(.headline)
+                            .padding(.vertical, 8)
+                        HStack {
+                            Text("Reps: " + String(Int(getNumberReps(rawData: workoutWithTitles.data))))
+                                .font(.headline)
+                                .padding(.vertical,8)
+                            Spacer()
+                            Text("Optimal Reps: " + String(Int(getNumberMaxReps(rawData: workoutWithTitles.data))))
+                                .font(.headline)
+                                .padding(.vertical,8)
+                            Spacer()
+                            Text("Optimization Score: " + "(" + String(format: "%.2f", (getNumberReps(rawData: workoutWithTitles.data) != 0) ? (getNumberMaxReps(rawData: workoutWithTitles.data) / getNumberReps(rawData: workoutWithTitles.data)) * 100 : 0) + "%)")
+                        }.padding(8)
+                        LineChart(workoutData: workoutWithTitles.data)
+                            .frame(height: 200) // Adjust the height as needed
+                            .padding()
                         }
                     }
-                    .onAppear {
-                        // Fetch workout data from Firestore when the view appears
-                        fetchWorkoutData()
-                    }
-                    .navigationTitle("My Workout History")
-                }
             }
         }
     }
     
     func fetchWorkoutData() {
         let db = Firestore.firestore()
-        let userID = "dummy6" // Replace with actual user ID
+        let userID = "dummy7" // Replace with actual user ID
         
         db.collection("users").document(userID).collection("workouts")
             .order(by: "timestamp", descending: true)
@@ -181,29 +222,15 @@ struct PreviousWorkouts: View {
                     self.workoutDataWithTitles = fetchedDataWithTitles
                 }
             }
-    }
-}
-
-struct LineChart: View {
-    var workoutData: [Int]
-    
-    var body: some View {
-        if #available(iOS 16.0, *) {
-            Chart() {
-                ForEach(Array(workoutData.enumerated()), id: \.offset) {index,datapoint in
-                    LineMark(
-                        x: .value("Time", index),
-                        y: .value("Microvolts", datapoint)
-                    )
-                }
-
-            }
-        } else {
-            // Fallback on earlier versions
         }
+    }
+
+struct CompareWorkoutsView: View {
+    var body: some View {
+        Text("Compare Workouts View")
     }
 }
 
 #Preview {
-    PreviousWorkouts().environmentObject(AppState())
+    DashboardView().environmentObject(AppState())
 }
