@@ -162,6 +162,9 @@ struct DashboardView: View {
                 .toolbar {
                     NavigationLink(destination: Workouts().environmentObject(appState)) {
                         Image(systemName: "plus")
+                            .accessibilityLabel("NavigateToWorkouts")
+                            .accessibilityIdentifier("NavigateToWorkouts")
+
                     }
                 }
                 
@@ -204,7 +207,7 @@ struct DashboardView: View {
     
     func fetchWorkoutData() {
         let db = Firestore.firestore()
-        let userID = "dummy7" // Replace with actual user ID
+        let userID = "dummy6" // Replace with actual user ID
         
         db.collection("users").document(userID).collection("workouts")
             .order(by: "timestamp", descending: true)

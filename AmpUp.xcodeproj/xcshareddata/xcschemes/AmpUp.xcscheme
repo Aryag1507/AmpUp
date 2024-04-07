@@ -40,6 +40,17 @@
                ReferencedContainer = "container:AmpUp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "51D1E1222BC34DB300E7203B"
+               BuildableName = "AmpUpUITests.xctest"
+               BlueprintName = "AmpUpUITests"
+               ReferencedContainer = "container:AmpUp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

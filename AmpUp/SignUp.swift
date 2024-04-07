@@ -2,69 +2,84 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-struct Signup: View {
-    @EnvironmentObject var appState: AppState
-    @State private var name: String = "" // Field for user's name
-    @State private var username: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var confirmPassword: String = ""
-    @State private var errorMessage: String? // To display error messages
-
+class SignupViewModel: ObservableObject {
+    @Published var appState: AppState
+    private var authService: AuthProtocol
+    private var firestoreService: FirestoreServiceProtocol
+    
+    @Published var name: String = ""
+    @Published var username: String = ""
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var confirmPassword: String = ""
+    @Published var errorMessage: String?
+    
+    init(authService: AuthProtocol, firestoreService: FirestoreServiceProtocol, appState: AppState) {
+        self.authService = authService
+        self.firestoreService = firestoreService
+        self.appState = appState
+    }
+    
     func handleSignUp() {
         guard password == confirmPassword else {
             errorMessage = "Passwords do not match."
             return
         }
-
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        
+        authService.createUser(withEmail: email, password: password) { success, error in
             if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
-                // User signed up successfully, now add user data to Firestore with specified structure
-                let db = Firestore.firestore()
+                self.errorMessage = error.localizedDescription
+                return
+            }
+            
+            if success {
                 let userData: [String: Any] = [
                     "name": self.name,
-                    "workouts": [], // Initialize as empty array
-                    "emg_output": [] // Initialize as empty array
+                    "workouts": [],
+                    "emg_output": []
                 ]
                 
-                // Use username as document ID in users collection
-                db.collection("users").document(self.username).setData(userData) { error in
+                self.firestoreService.setData(for: self.username, in: "users", data: userData) { error in
                     if let error = error {
-                        print("Error writing document: \(error)")
-                        errorMessage = "Failed to save user data: \(error.localizedDescription)"
+                        self.errorMessage = "Failed to save user data: \(error.localizedDescription)"
                     } else {
-                        print("User data successfully written to Firestore with username as ID")
                         DispatchQueue.main.async {
-                            self.appState.isLoggedIn = true // Update app state to indicate user is logged in
+                            self.appState.isLoggedIn = true
                         }
-                        // Here, you can navigate to another view or perform other actions upon successful sign up and data save
                     }
                 }
             }
         }
     }
+}
 
+struct Signup: View {
+    @EnvironmentObject var appState: AppState
+    @ObservedObject var viewModel: SignupViewModel
+    
+    init(authService: AuthProtocol, firestoreService: FirestoreServiceProtocol, appState: AppState) {
+        _viewModel = ObservedObject(wrappedValue: SignupViewModel(authService: authService, firestoreService: firestoreService, appState: appState))
+    }
+    
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("User Information")) {
-                    TextField("Name", text: $name) // Text field for user's name
+                    TextField("Name", text: $viewModel.name)
                         .autocapitalization(.none)
-                    TextField("Username", text: $username)
+                    TextField("Username", text: $viewModel.username)
                         .autocapitalization(.none)
-                    TextField("Email", text: $email)
+                    TextField("Email", text: $viewModel.email)
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
                 }
                 
                 Section(header: Text("Password")) {
-                    SecureField("Password", text: $password)
-                    SecureField("Confirm Password", text: $confirmPassword)
+                    SecureField("Password", text: $viewModel.password)
+                    SecureField("Confirm Password", text: $viewModel.confirmPassword)
                 }
                 
-                if let errorMessage = errorMessage {
+                if let errorMessage = viewModel.errorMessage {
                     Section {
                         Text(errorMessage)
                             .foregroundColor(.red)
@@ -73,7 +88,7 @@ struct Signup: View {
                 
                 Section {
                     Button("Sign Up") {
-                        handleSignUp()
+                        viewModel.handleSignUp()
                     }
                 }
             }
@@ -82,8 +97,12 @@ struct Signup: View {
     }
 }
 
+// Adjusted preview provider to reflect changes
 struct Signup_Previews: PreviewProvider {
     static var previews: some View {
-        Signup().environmentObject(AppState())
+        let authService = AuthManager()
+        let firestoreService = FirestoreService()
+        let appState = AppState()
+        return Signup(authService: authService, firestoreService: firestoreService, appState: appState).environmentObject(appState)
     }
 }

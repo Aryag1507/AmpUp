@@ -49,13 +49,14 @@ struct WorkoutGraph: View {
         self.pausedState = !self.pausedState
         
     }
-
+    
     func endWorkout() {
         
-        if self.workoutData == [] {
-            print("No data to write. Ending")
-            return
-        }
+//        if self.workoutData == [] {
+//            print("No data to write. Ending")
+//            return
+//        }
+        
         let pkg: [String: Any] = ["state": "stop"]
         firestoreService.setData(for: "0", in: "start_stop", data: pkg) { error in
             if let error = error {
@@ -73,20 +74,16 @@ struct WorkoutGraph: View {
             "workoutData": self.workoutData,
             "title": self.workoutTitle
         ]
-
-        self.workoutTitle = ""
-        self.workoutData = []
-        firestoreService.addData(to: "users/dummy7/workouts", data: workoutSessionData) { error, documentID in
-
+        
+        firestoreService.addData(to: "users/dummy6/workouts", data: workoutSessionData) { error, documentID in
             if let error = error {
                 print("Error writing document: \(error)")
             } else if let documentID = documentID {
                 print("Workout session added to Firestore with ID: \(documentID)")
             }
             self.workoutData = []
-            
+            self.workoutTitle = ""
         }
-    
     }
     
     func listenToWorkout() {

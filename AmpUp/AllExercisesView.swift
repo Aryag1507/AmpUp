@@ -53,6 +53,7 @@ struct AllExercisesView: View {
                         viewModel.isShowingGroupSelection = true
                     }
                     .foregroundColor(.blue)
+                    .accessibilityIdentifier("ChangeGroup")
                 }
             }
             .listStyle(PlainListStyle())
