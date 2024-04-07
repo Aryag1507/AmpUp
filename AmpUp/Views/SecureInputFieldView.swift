@@ -38,6 +38,7 @@ struct SecureInputFieldView: View {
             .padding(.leading, 8)
             .offset(CGSize(width: 0, height: -20))
         }
+        .accessibilityIdentifier(title ?? "Input")
         .padding(4)
     }
 }

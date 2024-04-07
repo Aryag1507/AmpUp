@@ -27,7 +27,7 @@ struct AddWorkoutGroupView: View {
         }
     }
     
-    private func addNewWorkoutGroup() {
+    func addNewWorkoutGroup() {
             guard !newTitle.isEmpty else { return }
             
             firestoreService.addWorkoutGroup(title: newTitle) { result in

@@ -61,13 +61,14 @@ struct ContentView: View {
                         .alert(item: $loginError) { error in
                             Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
                         }
+                        .accessibilityIdentifier("Login")
                         
                         HStack{
                             Text("Don't have an account with us?")
                                 .fontWeight(.thin)
                                 .foregroundColor(Color.white)
                             
-                            NavigationLink(destination: Signup().environmentObject(appState)) {
+                            NavigationLink(destination: Signup(authService: AuthManager(), firestoreService: FirestoreService(), appState: appState)) {
                                 Text("Sign up")
                                     .foregroundColor(.white)
                                     .underline()

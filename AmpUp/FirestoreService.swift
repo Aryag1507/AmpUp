@@ -1,5 +1,6 @@
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 protocol FirestoreServiceProtocol {
     func setData(for document: String, in collection: String, data: [String: Any], completion: @escaping (Error?) -> Void)
@@ -49,6 +50,18 @@ class FirestoreService: FirestoreServiceProtocol {
                 let newGroup = WorkoutGroup(title: title, exercises: [])
                 completion(.success(newGroup))
             }
+        }
+    }
+}
+
+protocol AuthProtocol {
+    func createUser(withEmail email: String, password: String, completion: @escaping (Bool, Error?) -> Void)
+}
+
+class AuthManager: AuthProtocol {
+    func createUser(withEmail email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            completion(authResult != nil, error)
         }
     }
 }

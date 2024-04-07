@@ -18,6 +18,8 @@
 		516081CE2B7D17D20005AFC5 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CD2B7D17D20005AFC5 /* Workouts.swift */; };
 		516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081CF2B7D17FD0005AFC5 /* Profile.swift */; };
 		516081D22B7D18340005AFC5 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081D12B7D18340005AFC5 /* SignUp.swift */; };
+		51D1E1262BC34DB300E7203B /* AmpUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1E1252BC34DB300E7203B /* AmpUpUITests.swift */; };
+		51D1E1282BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1E1272BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift */; };
 		9934A10C2B7A699400AC028E /* AmpUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9934A10B2B7A699400AC028E /* AmpUpApp.swift */; };
 		9934A10E2B7A699400AC028E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9934A10D2B7A699400AC028E /* ContentView.swift */; };
 		9934A1102B7A699800AC028E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9934A10F2B7A699800AC028E /* Assets.xcassets */; };
@@ -43,6 +45,13 @@
 			remoteGlobalIDString = 9934A1072B7A699400AC028E;
 			remoteInfo = AmpUp;
 		};
+		51D1E1292BC34DB300E7203B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9934A1002B7A699300AC028E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9934A1072B7A699400AC028E;
+			remoteInfo = AmpUp;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +67,9 @@
 		516081CD2B7D17D20005AFC5 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
 		516081CF2B7D17FD0005AFC5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		516081D12B7D18340005AFC5 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		51D1E1232BC34DB300E7203B /* AmpUpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmpUpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		51D1E1252BC34DB300E7203B /* AmpUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpUITests.swift; sourceTree = "<group>"; };
+		51D1E1272BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9934A1082B7A699400AC028E /* AmpUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmpUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9934A10B2B7A699400AC028E /* AmpUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpApp.swift; sourceTree = "<group>"; };
 		9934A10D2B7A699400AC028E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,6 +82,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		515EA7712BBB67C500225FA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51D1E1202BC34DB300E7203B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -114,11 +133,21 @@
 			path = AmpUpTests;
 			sourceTree = "<group>";
 		};
+		51D1E1242BC34DB300E7203B /* AmpUpUITests */ = {
+			isa = PBXGroup;
+			children = (
+				51D1E1252BC34DB300E7203B /* AmpUpUITests.swift */,
+				51D1E1272BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift */,
+			);
+			path = AmpUpUITests;
+			sourceTree = "<group>";
+		};
 		9934A0FF2B7A699300AC028E = {
 			isa = PBXGroup;
 			children = (
 				9934A10A2B7A699400AC028E /* AmpUp */,
 				515EA7752BBB67C500225FA3 /* AmpUpTests */,
+				51D1E1242BC34DB300E7203B /* AmpUpUITests */,
 				9934A1092B7A699400AC028E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,6 +157,7 @@
 			children = (
 				9934A1082B7A699400AC028E /* AmpUp.app */,
 				515EA7742BBB67C500225FA3 /* AmpUpTests.xctest */,
+				51D1E1232BC34DB300E7203B /* AmpUpUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,6 +211,24 @@
 			productReference = 515EA7742BBB67C500225FA3 /* AmpUpTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		51D1E1222BC34DB300E7203B /* AmpUpUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51D1E12D2BC34DB300E7203B /* Build configuration list for PBXNativeTarget "AmpUpUITests" */;
+			buildPhases = (
+				51D1E11F2BC34DB300E7203B /* Sources */,
+				51D1E1202BC34DB300E7203B /* Frameworks */,
+				51D1E1212BC34DB300E7203B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				51D1E12A2BC34DB300E7203B /* PBXTargetDependency */,
+			);
+			name = AmpUpUITests;
+			productName = AmpUpUITests;
+			productReference = 51D1E1232BC34DB300E7203B /* AmpUpUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		9934A1072B7A699400AC028E /* AmpUp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9934A1162B7A699800AC028E /* Build configuration list for PBXNativeTarget "AmpUp" */;
@@ -222,6 +270,10 @@
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = 9934A1072B7A699400AC028E;
 					};
+					51D1E1222BC34DB300E7203B = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 9934A1072B7A699400AC028E;
+					};
 					9934A1072B7A699400AC028E = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -245,12 +297,20 @@
 			targets = (
 				9934A1072B7A699400AC028E /* AmpUp */,
 				515EA7732BBB67C500225FA3 /* AmpUpTests */,
+				51D1E1222BC34DB300E7203B /* AmpUpUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		515EA7722BBB67C500225FA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51D1E1212BC34DB300E7203B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -275,6 +335,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				515EA7772BBB67C500225FA3 /* AmpUpTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51D1E11F2BC34DB300E7203B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51D1E1282BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift in Sources */,
+				51D1E1262BC34DB300E7203B /* AmpUpUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +375,11 @@
 			isa = PBXTargetDependency;
 			target = 9934A1072B7A699400AC028E /* AmpUp */;
 			targetProxy = 515EA7782BBB67C500225FA3 /* PBXContainerItemProxy */;
+		};
+		51D1E12A2BC34DB300E7203B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9934A1072B7A699400AC028E /* AmpUp */;
+			targetProxy = 51D1E1292BC34DB300E7203B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -356,6 +430,53 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmpUp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AmpUp";
+			};
+			name = Release;
+		};
+		51D1E12B2BC34DB300E7203B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D2XK6X8N8F;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AmpUpUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AmpUp;
+			};
+			name = Debug;
+		};
+		51D1E12C2BC34DB300E7203B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D2XK6X8N8F;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AmpUpUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AmpUp;
 			};
 			name = Release;
 		};
@@ -539,6 +660,15 @@
 			buildConfigurations = (
 				515EA77B2BBB67C500225FA3 /* Debug */,
 				515EA77C2BBB67C500225FA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51D1E12D2BC34DB300E7203B /* Build configuration list for PBXNativeTarget "AmpUpUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51D1E12B2BC34DB300E7203B /* Debug */,
+				51D1E12C2BC34DB300E7203B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

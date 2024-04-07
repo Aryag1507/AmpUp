@@ -65,6 +65,8 @@ struct Workouts: View {
                 }) {
                     NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups).environmentObject(appState)) {
                         Image(systemName: "list.bullet")
+                            .accessibilityLabel("NavigateToAllExercises")
+                            .accessibilityIdentifier("NavigateToAllExercises")
                     }
                 }
             )
