@@ -17,14 +17,24 @@ struct Workouts: View {
             VStack {
                 ScrollView {
                     ForEach(workoutGroups) { group in
-                        NavigationLink(destination: ExerciseListView(title: group.title, exercises: group.exercises)) {
-                            Text(group.title)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .padding(.horizontal)
+                        HStack {
+                            NavigationLink(destination: ExerciseListView(title: group.title, exercises: group.exercises)) {
+                                Text(group.title)
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .padding(.horizontal)
+                            }
+                            
+                            Button(action: {
+                                deleteWorkoutGroup(group)
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }
+                            .padding(.trailing)
                         }
                     }
                     
@@ -92,7 +102,30 @@ struct Workouts: View {
 
         }
     }
+    
+    func deleteWorkoutGroup(_ group: WorkoutGroup) {
+        let db = Firestore.firestore()
+        db.collection("workouts").whereField("title", isEqualTo: group.title).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error deleting workout group: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                print("No documents to delete")
+                return
+            }
+            
+            for document in documents {
+                document.reference.delete()
+            }
+            
+            // Remove the deleted group from the local array
+            workoutGroups.removeAll { $0.id == group.id }
+        }
+    }
 }
+
 
 struct ExerciseListView: View {
     var title: String
@@ -107,6 +140,7 @@ struct ExerciseListView: View {
         .navigationBarTitle(Text(title), displayMode: .inline)
     }
 }
+
 
 struct Workouts_Previews: PreviewProvider {
     static var previews: some View {
