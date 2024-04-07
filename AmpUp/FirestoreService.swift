@@ -5,7 +5,9 @@ protocol FirestoreServiceProtocol {
     func setData(for document: String, in collection: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func addData(to collection: String, data: [String: Any], completion: @escaping (Error?, String?) -> Void)
     func listenToDocument(in collection: String, document: String, completion: @escaping ([String: Any]?, Error?) -> Void) -> ListenerRegistration
-}
+    func addWorkoutGroup(title: String, completion: @escaping (Result<WorkoutGroup, Error>) -> Void)
+    }
+
 
 class FirestoreService: FirestoreServiceProtocol {
     func setData(for document: String, in collection: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
@@ -34,4 +36,19 @@ class FirestoreService: FirestoreServiceProtocol {
         }
     }
     
+    func addWorkoutGroup(title: String, completion: @escaping (Result<WorkoutGroup, Error>) -> Void) {
+        let db = Firestore.firestore()
+        let data: [String: Any] = [
+            "title": title
+        ]
+        
+        db.collection("workouts").addDocument(data: data) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let newGroup = WorkoutGroup(title: title, exercises: [])
+                completion(.success(newGroup))
+            }
+        }
+    }
 }

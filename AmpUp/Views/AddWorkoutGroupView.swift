@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-// Example view for adding a new workout group. Replace with your actual view or form
 struct AddWorkoutGroupView: View {
     @Binding var workoutGroups: [WorkoutGroup]
     @State private var newTitle = ""
     @Environment(\.presentationMode) var presentationMode
-    
+    var firestoreService: FirestoreServiceProtocol
     var body: some View {
         NavigationView {
             Form {
@@ -29,11 +28,18 @@ struct AddWorkoutGroupView: View {
     }
     
     private func addNewWorkoutGroup() {
-        guard !newTitle.isEmpty else { return }
-        let newGroup = WorkoutGroup(title: newTitle, exercises: [])
-        workoutGroups.append(newGroup)
-        presentationMode.wrappedValue.dismiss()
-    }
+            guard !newTitle.isEmpty else { return }
+            
+            firestoreService.addWorkoutGroup(title: newTitle) { result in
+                switch result {
+                case .success(let newGroup):
+                    workoutGroups.append(newGroup)
+                    presentationMode.wrappedValue.dismiss()
+                case .failure(let error):
+                    print("Error adding workout group: \(error.localizedDescription)")
+                }
+            }
+        }
 }
 
 //#Preview {
