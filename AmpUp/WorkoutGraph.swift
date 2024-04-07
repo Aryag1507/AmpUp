@@ -73,9 +73,11 @@ struct WorkoutGraph: View {
             "workoutData": self.workoutData,
             "title": self.workoutTitle
         ]
+
         self.workoutTitle = ""
         self.workoutData = []
         firestoreService.addData(to: "users/dummy7/workouts", data: workoutSessionData) { error, documentID in
+
             if let error = error {
                 print("Error writing document: \(error)")
             } else if let documentID = documentID {

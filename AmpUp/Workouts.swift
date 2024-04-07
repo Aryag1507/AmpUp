@@ -1,4 +1,5 @@
 import SwiftUI
+import Firebase
 
 struct WorkoutGroup: Identifiable {
     let id = UUID()
@@ -8,11 +9,7 @@ struct WorkoutGroup: Identifiable {
 
 struct Workouts: View {
     @EnvironmentObject var appState: AppState
-    @State private var workoutGroups: [WorkoutGroup] = [
-        WorkoutGroup(title: "Leg Workouts", exercises: ["Barbell Squat", "Leg Extensions", "Calf Raises"]),
-        WorkoutGroup(title: "Bicep and Back Workouts", exercises: ["Dumbbell Curls", "Hammer Curls"]),
-        WorkoutGroup(title: "Chest and Tricep Workouts", exercises: ["Dumbbell Shoulder Press", "Dumbbell Lateral Raises", "Tricep Pulldowns"])
-    ]
+    @State private var workoutGroups: [WorkoutGroup] = []
     @State private var showingAddWorkoutView = false
     
     var body: some View {
@@ -47,27 +44,52 @@ struct Workouts: View {
                     .padding(.horizontal)
                     
                 }
-                // MOVE TO BicepCurls.swift
                 
                 Spacer()
                 WorkoutGraph(firestoreService: FirestoreService())
-                
             }
             .navigationBarTitle("Create New Workout", displayMode: .inline)
-
             .navigationBarItems(
                 trailing: Button(action: {
                     // Placeholder for navigation action if needed
                 }) {
-                    // bullet list button to see all exercises
                     NavigationLink(destination: AllExercisesView(workoutGroups: $workoutGroups).environmentObject(appState)) {
                         Image(systemName: "list.bullet")
                     }
                 }
             )
             .sheet(isPresented: $showingAddWorkoutView) {
-                AddWorkoutGroupView(workoutGroups: $workoutGroups)
+                AddWorkoutGroupView(workoutGroups: $workoutGroups, firestoreService: FirestoreService())
             }
+        }
+        .onAppear {
+            fetchWorkoutsFromFirestore()
+        }
+    }
+    
+    func fetchWorkoutsFromFirestore() {
+        let db = Firestore.firestore()
+        
+        db.collection("workouts").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching workouts: \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = querySnapshot?.documents else {
+                print("No documents")
+                return
+            }
+
+            self.workoutGroups = documents.compactMap { document in
+                guard let title = document.data()["title"] as? String else {
+                    return nil // If title is missing, skip this document
+                }
+                
+                let exercises = document.data()["exercises"] as? [String] ?? []
+                return WorkoutGroup(title: title, exercises: exercises)
+            }
+
         }
     }
 }

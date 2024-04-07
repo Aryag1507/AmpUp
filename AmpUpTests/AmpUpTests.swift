@@ -37,6 +37,10 @@ class MockFirestoreService: FirestoreServiceProtocol {
         // Implement if needed for the test
         return ListenerRegistrationMock()
     }
+    
+    func addWorkoutGroup(title: String, completion: @escaping (Result<AmpUp.WorkoutGroup, any Error>) -> Void) {
+        completion(.success(WorkoutGroup(title: "dummyGroup", exercises: [])))
+    }
 }
 
 class ListenerRegistrationMock: NSObject, ListenerRegistration {
@@ -77,7 +81,6 @@ final class AmpUpTests: XCTestCase {
     func testEndWorkout() throws {
         let mockFirestoreService = MockFirestoreService()
         let workoutGraph = WorkoutGraph(firestoreService: mockFirestoreService)
-        
         // Setup initial state if necessary, e.g., viewModel.workoutData = [1, 2, 3]
 
         workoutGraph.endWorkout()
@@ -97,5 +100,11 @@ final class AmpUpTests: XCTestCase {
 
         // Optionally, verify the workoutData is reset/empty after ending the workout
         XCTAssertTrue(workoutGraph.workoutData.isEmpty)
+    }
+    func testWorkoutGroup() throws {
+        let mockFirestoreService = MockFirestoreService()
+        let workoutGroups = [WorkoutGroup(title: "dummyGroup1", exercises: []), WorkoutGroup(title: "dummyGroup2", exercises: [])]
+        let workoutGroupTest = AddWorkoutGroupView(workoutGroups: workoutGroups, firestoreService: mockFirestoreService)
+        workoutGroupTest.addNewWorkoutGroup()
     }
 }
