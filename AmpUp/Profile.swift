@@ -73,7 +73,9 @@ struct Profile: View {
                 
                 Spacer()
                 Button("Sign Out") {
-                    signOut()
+                    withAnimation {
+                        signOut()
+                    }
                 }
                 .padding()
                 .foregroundColor(.white)
@@ -86,14 +88,20 @@ struct Profile: View {
         }
         
     }
+    
     func signOut() {
-                do {
-                    try Auth.auth().signOut()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            do {
+                try Auth.auth().signOut()
+                withAnimation {
                     appState.isLoggedIn = false
-                } catch let signOutError as NSError {
-                    print("Error signing out: %@", signOutError)
                 }
+            } catch let signOutError as NSError {
+                print("Error signing out: %@", signOutError)
             }
+        }
+    }
+
 }
 
 
