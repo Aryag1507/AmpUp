@@ -52,6 +52,26 @@ class FirestoreService: FirestoreServiceProtocol {
             }
         }
     }
+    
+    func fetchWorkouts(for userID: String, completion: @escaping ([(title: String, data: [Int])]?, Error?) -> Void) {
+            let db = Firestore.firestore()
+            db.collection("users").document(userID).collection("workouts")
+                .order(by: "timestamp", descending: true)
+                .getDocuments { querySnapshot, error in
+                    if let error = error {
+                        completion(nil, error)
+                    } else {
+                        var fetchedWorkouts: [(title: String, data: [Int])] = []
+                        for document in querySnapshot!.documents {
+                            if let workoutArray = document.data()["workoutData"] as? [Int],
+                               let title = document.data()["title"] as? String {
+                                fetchedWorkouts.append((title: title, data: workoutArray))
+                            }
+                        }
+                        completion(fetchedWorkouts, nil)
+                    }
+                }
+        }
 }
 
 protocol AuthProtocol {

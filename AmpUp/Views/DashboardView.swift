@@ -228,11 +228,6 @@ struct DashboardView: View {
         }
     }
 
-struct CompareWorkoutsView: View {
-    var body: some View {
-        Text("Compare Workouts View")
-    }
-}
 
 #Preview {
     DashboardView().environmentObject(AppState())
