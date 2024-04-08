@@ -43,7 +43,7 @@ struct AmpUpApp: App {
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
-                    Profile()
+                    Profile().environmentObject(appState)
                         .tabItem {
                             Label("Profile", systemImage: "person.circle")
                         }

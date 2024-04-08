@@ -20,6 +20,7 @@
 		516081D22B7D18340005AFC5 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516081D12B7D18340005AFC5 /* SignUp.swift */; };
 		51D1E1262BC34DB300E7203B /* AmpUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1E1252BC34DB300E7203B /* AmpUpUITests.swift */; };
 		51D1E1282BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1E1272BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift */; };
+		51D1E1652BC37D0C00E7203B /* CompareWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D1E1642BC37D0C00E7203B /* CompareWorkoutsView.swift */; };
 		9934A10C2B7A699400AC028E /* AmpUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9934A10B2B7A699400AC028E /* AmpUpApp.swift */; };
 		9934A10E2B7A699400AC028E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9934A10D2B7A699400AC028E /* ContentView.swift */; };
 		9934A1102B7A699800AC028E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9934A10F2B7A699800AC028E /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		51D1E1232BC34DB300E7203B /* AmpUpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmpUpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51D1E1252BC34DB300E7203B /* AmpUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpUITests.swift; sourceTree = "<group>"; };
 		51D1E1272BC34DB300E7203B /* AmpUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		51D1E1642BC37D0C00E7203B /* CompareWorkoutsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompareWorkoutsView.swift; sourceTree = "<group>"; };
 		9934A1082B7A699400AC028E /* AmpUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmpUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9934A10B2B7A699400AC028E /* AmpUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpUpApp.swift; sourceTree = "<group>"; };
 		9934A10D2B7A699400AC028E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			children = (
 				515EA7672BBB3F8C00225FA3 /* AddWorkoutGroupView.swift */,
 				515EA7682BBB3F8C00225FA3 /* InputFieldView.swift */,
+				51D1E1642BC37D0C00E7203B /* CompareWorkoutsView.swift */,
 				515EA7692BBB3F8C00225FA3 /* PreviousWorkouts.swift */,
 				994013A72BBF9AEF0032DB1B /* DashboardView.swift */,
 				515EA76A2BBB3F8C00225FA3 /* SecureInputFieldView.swift */,
@@ -358,6 +361,7 @@
 				515EA77F2BBB69F600225FA3 /* FirestoreService.swift in Sources */,
 				516081D02B7D17FD0005AFC5 /* Profile.swift in Sources */,
 				9934A10E2B7A699400AC028E /* ContentView.swift in Sources */,
+				51D1E1652BC37D0C00E7203B /* CompareWorkoutsView.swift in Sources */,
 				9934A10C2B7A699400AC028E /* AmpUpApp.swift in Sources */,
 				515355C22B98E90200938EC6 /* AllExercisesView.swift in Sources */,
 				515EA76F2BBB3F8C00225FA3 /* SecureInputFieldView.swift in Sources */,

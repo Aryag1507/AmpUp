@@ -113,20 +113,16 @@ final class AmpUpTests: XCTestCase {
         workoutGraph.workoutData = [1,2,4]
         workoutGraph.endWorkout()
 
-        // Verify that setData was called to stop the workout
         XCTAssertEqual(mockFirestoreService.setDataCallCount, 1)
         XCTAssertEqual(mockFirestoreService.lastSetDataCollection, "start_stop")
         XCTAssertEqual(mockFirestoreService.lastSetDataDocument, "0")
         XCTAssertEqual(mockFirestoreService.lastSetData?["state"] as? String, "stop")
 
-        // Verify that addData was called to add the workout session
         XCTAssertEqual(mockFirestoreService.addDataCallCount, 1)
         XCTAssertEqual(mockFirestoreService.lastAddDataCollection, "users/dummy6/workouts")
-        // Here, you might want to check specific fields in `lastAddData`, like the presence of "timestamp" and "workoutData"
         XCTAssertNotNil(mockFirestoreService.lastAddData?["timestamp"])
         XCTAssertNotNil(mockFirestoreService.lastAddData?["workoutData"])
 
-        // Optionally, verify the workoutData is reset/empty after ending the workout
         XCTAssertTrue(workoutGraph.workoutData.isEmpty)
     }
     
