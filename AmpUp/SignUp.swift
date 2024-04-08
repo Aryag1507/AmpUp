@@ -62,38 +62,53 @@ struct Signup: View {
     }
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("User Information")) {
-                    TextField("Name", text: $viewModel.name)
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Consider adding a logo or title similar to ContentView, if applicable
+                    Text("Sign Up")
+                        .foregroundColor(.white)
+                        .bold()
+                        .font(.title)
+                        .padding(.bottom,20)
+                    
+                    // User information fields
+                    InputFieldView(data: $viewModel.name, title: "Name")
                         .autocapitalization(.none)
-                    TextField("Username", text: $viewModel.username)
+
+                    InputFieldView(data: $viewModel.username, title: "Username")
                         .autocapitalization(.none)
-                    TextField("Email", text: $viewModel.email)
+
+                    InputFieldView(data: $viewModel.email, title: "Email")
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
-                }
-                
-                Section(header: Text("Password")) {
-                    SecureField("Password", text: $viewModel.password)
-                    SecureField("Confirm Password", text: $viewModel.confirmPassword)
-                }
-                
-                if let errorMessage = viewModel.errorMessage {
-                    Section {
+                        .padding(.bottom,30)
+
+                    SecureInputFieldView(data: $viewModel.password, title: "Password")
+                    
+                    SecureInputFieldView(data: $viewModel.confirmPassword, title: "Confirm Password")
+                    
+                    if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
                             .foregroundColor(.red)
                     }
-                }
-                
-                Section {
+
                     Button("Sign Up") {
                         viewModel.handleSignUp()
                     }
+                    .font(.title3)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color(red: 182/255, green: 4/255, blue: 42/255))
+                    .foregroundColor(.white)
+                    .cornerRadius(40)
+                    .padding(.top, 16)
                 }
+                .padding()
             }
-            .navigationBarTitle("Sign Up", displayMode: .inline)
         }
+        .navigationBarTitle("Sign Up", displayMode: .inline)
     }
 }
 
