@@ -93,6 +93,7 @@ struct Signup: View {
                         Text(errorMessage)
                             .foregroundColor(.red)
                     }
+                    
 
                     Button("Sign Up") {
                         viewModel.handleSignUp()
