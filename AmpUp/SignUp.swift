@@ -94,7 +94,6 @@ struct Signup: View {
                             .foregroundColor(.red)
                     }
                     
-
                     Button("Sign Up") {
                         viewModel.handleSignUp()
                     }
