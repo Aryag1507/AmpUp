@@ -126,3 +126,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView().environmentObject(AppState())
     }
 }
+
+// comment for CI/CD commit
