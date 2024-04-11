@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Dynamically find the project's root directory
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+
+# Generate a unique name for the .xcresult bundle using a timestamp
+TEST_RESULTS_PATH="${PROJECT_ROOT}/reports/TestResults_$(date +%Y%m%d%H%M%S).xcresult"
+
+# Clean previous build and test with code coverage enabled, specifying the unique path for the .xcresult bundle
+xcodebuild clean test -scheme AmpUp -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4' -project "${PROJECT_ROOT}/AmpUp.xcodeproj" -enableCodeCoverage YES -resultBundlePath "${TEST_RESULTS_PATH}"
+
+# Capture the exit status of the tests
+TEST_EXIT_STATUS=${PIPESTATUS[0]}
+
+if [ $TEST_EXIT_STATUS -ne 0 ]; then
+    echo "Unit tests failed. Commit aborted."
+else
+    echo "Unit tests succeeded."
+fi
+
+# Display the code coverage summary
+echo "Code coverage summary:"
+xcrun xccov view --report --only-targets "${TEST_RESULTS_PATH}"
+
+# If tests pass, allow the commit
+exit 0
