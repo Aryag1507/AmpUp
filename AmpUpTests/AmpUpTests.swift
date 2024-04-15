@@ -154,6 +154,18 @@ final class AmpUpTests: XCTestCase {
         let workoutGroupTest = AddWorkoutGroupView(workoutGroups: workoutGroups, firestoreService: mockFirestoreService)
         workoutGroupTest.addNewWorkoutGroup()
     }
+    
+    func testCompareWorkoutData() {
+        let workouts = [
+            (title: "Morning Cardio", data: [100, 16383, 200, 16383, 300]),
+            (title: "Evening Yoga", data: [100, 200, 300, 400, 500])
+        ]
+        
+        let comparisonView = CompareWorkoutsView()
+        let result = comparisonView.compareWorkoutData(workout1: workouts[0], workout2: workouts[1])
+        comparisonView.performComparison()
+        XCTAssertEqual(result, "Morning Cardio hit the peak value more often (2 times) than Evening Yoga (0 times).")
+    }
 
 //    func testFetchWorkoutDataSuccess() {
 //        // Mock service setup
@@ -173,6 +185,5 @@ final class AmpUpTests: XCTestCase {
 //
 //        wait(for: [expectation], timeout: 5.0)
 //    }
-    
 
 }

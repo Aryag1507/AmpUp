@@ -82,7 +82,7 @@ struct CompareWorkoutsView: View {
             }
         }
 
-    private func performComparison() {
+    func performComparison() {
         // Ensure two different workouts are selected
         guard let workout1 = workouts.first(where: { $0.title == selectedWorkout1 }),
               let workout2 = workouts.first(where: { $0.title == selectedWorkout2 }) else {

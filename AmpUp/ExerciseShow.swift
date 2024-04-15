@@ -57,6 +57,7 @@ struct ExerciseShow: View {
     var body: some View {
         VStack {
             Text(exerciseName)
+                .accessibilityIdentifier(exerciseName)
             loadImage(for: exerciseName)
             
         }

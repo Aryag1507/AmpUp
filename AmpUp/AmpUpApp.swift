@@ -43,10 +43,12 @@ struct AmpUpApp: App {
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
+                        .accessibilityIdentifier("Home")
                     Profile().environmentObject(appState)
                         .tabItem {
                             Label("Profile", systemImage: "person.circle")
                         }
+                        .accessibilityIdentifier("Profile")
                       }
             } else {
                 // Your login or signup view

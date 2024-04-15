@@ -22,7 +22,65 @@ final class AmpUpUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
+    func testInitial() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Find the email text field by its accessibility identifier
+        let emailTextField = app.textFields["Email"]
+        XCTAssertTrue(emailTextField.exists, "The email text field should exist.")
+        
+        emailTextField.tap()
+        emailTextField.typeText("keeg@gmail.com")
+        
+        // Find the password text field by its accessibility identifier
+        let passwordSecureField = app.secureTextFields["Password"]
+        XCTAssertTrue(passwordSecureField.exists, "The password text field should exist.")
+        
+        passwordSecureField.tap()
+        passwordSecureField.typeText("123456")
+        
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.exists, "The login button should exist.")
+
+        loginButton.press(forDuration: 0.3)
+        
+        let profileTab = app.tabBars.buttons["Profile"]
+        let existsProfile = NSPredicate(format: "exists == true")
+        
+        expectation(for: existsProfile, evaluatedWith: profileTab, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+
+        XCTAssertTrue(profileTab.exists, "Profile tab does not exist")
+        profileTab.tap()
+        
+        let homeTab = app.tabBars.buttons["Home"]
+        let existsHome = NSPredicate(format: "exists == true")
+        expectation(for: existsHome, evaluatedWith: homeTab, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(homeTab.exists, "Home tab does not exist")
+        homeTab.tap()
+                
+        let addWorkoutButton = app.buttons["NavigateToWorkouts"]
+        let exists1 = NSPredicate(format: "exists == 1")
+        expectation(for: exists1, evaluatedWith: addWorkoutButton, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(addWorkoutButton.exists, "The 'Add Workout' button should exist.")
+        addWorkoutButton.tap()
+        
+        let allExercisesButton = app.navigationBars.buttons["NavigateToAllExercises"]
+        let exists2 = NSPredicate(format: "exists == 1")
+        expectation(for: exists2, evaluatedWith: allExercisesButton, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(allExercisesButton.exists, "The 'All Exercises' navigation link is not visible.")
+        allExercisesButton.tap()
+
+        let changeGroupButton = app.buttons["ChangeGroup"].firstMatch // Use .firstMatch if there are multiple instances
+        changeGroupButton.tap()
+        XCTAssertTrue(changeGroupButton.exists, "Change Group button not found")
+    }
+    
+    func testWorkout() throws {
         let app = XCUIApplication()
         app.launch()
         
@@ -52,19 +110,67 @@ final class AmpUpUITests: XCTestCase {
         XCTAssertTrue(addWorkoutButton.exists, "The 'Add Workout' button should exist.")
         addWorkoutButton.tap()
         
-        let allExercisesButton = app.navigationBars.buttons["NavigateToAllExercises"]
-        let exists2 = NSPredicate(format: "exists == 1")
-        expectation(for: exists2, evaluatedWith: allExercisesButton, handler: nil)
+        let tricepButton = app.buttons["Triceps"]
+        let existsTricep = NSPredicate(format: "exists == true")
+        expectation(for: existsTricep, evaluatedWith: tricepButton, handler: nil)
         waitForExpectations(timeout: 5, handler: nil)
-        XCTAssertTrue(allExercisesButton.exists, "The 'All Exercises' navigation link is not visible.")
-        allExercisesButton.tap()
-
-        let changeGroupButton = app.buttons["ChangeGroup"].firstMatch // Use .firstMatch if there are multiple instances
-        changeGroupButton.tap()
-        XCTAssertTrue(changeGroupButton.exists, "Change Group button not found")
-
+        XCTAssertTrue(tricepButton.exists, "Tricep Workout Group does not exist")
+        tricepButton.tap()
+        
+        let tricepButton2 = app.buttons["Tricep Pulldowns"]
+        let existsTricepPic = NSPredicate(format: "exists == true")
+        expectation(for: existsTricepPic, evaluatedWith: tricepButton2, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(tricepButton2.exists, "Tricep Pulldown Picture does not exist")
+        tricepButton2.tap()
     }
+    
+    func testCompareWorkoutView() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Find the email text field by its accessibility identifier
+        let emailTextField = app.textFields["Email"]
+        XCTAssertTrue(emailTextField.exists, "The email text field should exist.")
+        
+        emailTextField.tap()
+        emailTextField.typeText("keeg@gmail.com")
+        
+        // Find the password text field by its accessibility identifier
+        let passwordSecureField = app.secureTextFields["Password"]
+        XCTAssertTrue(passwordSecureField.exists, "The password text field should exist.")
+        
+        passwordSecureField.tap()
+        passwordSecureField.typeText("123456")
+        
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.exists, "The login button should exist.")
 
+        loginButton.press(forDuration: 0.3)
+                
+        let compareWorkouts = app.buttons["Compare Workouts"]
+        let existsCompare = NSPredicate(format: "exists == 1")
+        expectation(for: existsCompare, evaluatedWith: compareWorkouts, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(compareWorkouts.exists, "The 'Compare Workout' button should exist.")
+        compareWorkouts.tap()
+    }
+    
+    func testSignup() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let signUp = app.buttons["Sign Up"]
+        let existsSignup = NSPredicate(format: "exists == true")
+        
+        expectation(for: existsSignup, evaluatedWith: signUp, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)  // Adjust timeout as necessary
+
+        XCTAssertTrue(signUp.exists, "Profile tab does not exist")
+        signUp.tap()
+        
+    }
+    
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.

@@ -34,7 +34,6 @@ struct WorkoutGraph: View {
     
     func pauseWorkout() {
         
-        
         var pkg: [String: Any] = ["state": "paused"]
         if self.pausedState == true {
             pkg = ["state": "start"]
