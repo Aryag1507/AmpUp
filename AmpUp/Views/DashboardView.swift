@@ -150,6 +150,7 @@ struct DashboardView: View {
                                 .frame(maxWidth: .infinity)
                             )
                     }
+                    .accessibilityIdentifier("Compare Workouts")
                 }
                 .padding(.top, 16)
                 .onAppear {

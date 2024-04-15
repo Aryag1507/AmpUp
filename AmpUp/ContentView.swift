@@ -73,6 +73,7 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .underline()
                             }
+                            .accessibilityIdentifier("Sign Up")
                         }
                         .padding(.top, 16)
                     }

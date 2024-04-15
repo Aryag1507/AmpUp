@@ -138,6 +138,7 @@ struct ExerciseListView: View {
             NavigationLink(destination: ExerciseShow(exerciseName: exercise)) {
                 Text(exercise)
             }
+            .accessibilityIdentifier(exercise)
         }
         .navigationBarTitle(Text(title), displayMode: .inline)
     }
