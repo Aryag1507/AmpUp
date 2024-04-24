@@ -16,9 +16,11 @@ struct AddWorkoutGroupView: View {
         NavigationView {
             Form {
                 TextField("Workout Group Title", text: $newTitle)
+                    .accessibilityIdentifier("Workout Group Title")
                 Button("Add") {
                     addNewWorkoutGroup()
                 }
+                .accessibilityIdentifier("Add Workout Group Button")
             }
             .navigationBarTitle("Add Workout Group", displayMode: .inline)
             .navigationBarItems(trailing: Button("Done") {

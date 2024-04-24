@@ -53,7 +53,7 @@ struct AllExercisesView: View {
                         viewModel.isShowingGroupSelection = true
                     }
                     .foregroundColor(.blue)
-                    .accessibilityIdentifier("ChangeGroup")
+                    .accessibilityIdentifier("\(exercise) ChangeGroup")
                 }
             }
             .listStyle(PlainListStyle())
@@ -103,6 +103,7 @@ struct GroupSelectionView: View {
                 }) {
                     Text(workoutGroups[index].title)
                 }
+                .accessibilityIdentifier(workoutGroups[index].title)
             }
         }
         .navigationBarTitle("Select Group", displayMode: .inline)
