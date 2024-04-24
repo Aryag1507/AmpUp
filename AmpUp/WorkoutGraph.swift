@@ -46,7 +46,6 @@ struct WorkoutGraph: View {
             }
         }
         self.pausedState = !self.pausedState
-        
     }
     
     func endWorkout() {
@@ -152,6 +151,7 @@ struct WorkoutGraph: View {
                         .background(Color.green)
                         .cornerRadius(10)
                 }
+                .accessibilityIdentifier("Start Workout")
                 
                 (self.isInitialState == true) ? nil :
                 Button(action: pauseWorkout) {
@@ -166,6 +166,7 @@ struct WorkoutGraph: View {
                         .cornerRadius(10)
                     
                 }
+                .accessibilityIdentifier("Pause Workout")
                 
                 Button(action: endWorkout) {
                     Text("End Workout")
@@ -174,6 +175,7 @@ struct WorkoutGraph: View {
                         .background(Color.red)
                         .cornerRadius(10)
                 }
+                .accessibilityIdentifier("End Workout")
             }
         }
         

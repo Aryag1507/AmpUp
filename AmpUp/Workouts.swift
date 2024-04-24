@@ -27,6 +27,7 @@ struct Workouts: View {
                                     .cornerRadius(10)
                                     .padding(.horizontal)
                             }
+                            .accessibilityIdentifier(group.title)
                             
                             Button(action: {
                                 deleteWorkoutGroup(group)
@@ -35,6 +36,7 @@ struct Workouts: View {
                                     .foregroundColor(.red)
                             }
                             .padding(.trailing)
+                            .accessibilityIdentifier("Delete \(group.title) Workout Group")
                         }
                     }
                     
@@ -52,6 +54,7 @@ struct Workouts: View {
                     .background(Color.gray)
                     .cornerRadius(10)
                     .padding(.horizontal)
+                    .accessibilityIdentifier("Add Workout Group")
                     
                 }
                 

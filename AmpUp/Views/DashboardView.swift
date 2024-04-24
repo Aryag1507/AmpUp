@@ -137,6 +137,7 @@ struct DashboardView: View {
                     .sheet(isPresented: $showingAllWorkouts) {
                         PreviousWorkouts().environmentObject(appState)
                     }
+                    .accessibilityIdentifier("Workout History")
                     
                     // "Compare Workouts" button
                     NavigationLink(destination: CompareWorkoutsView()) {

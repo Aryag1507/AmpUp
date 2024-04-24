@@ -37,6 +37,7 @@ struct Profile: View {
                     .sheet(isPresented: $isShowingImagePicker) {
                         ImagePicker(image: $profileImage)
                     }
+                    .accessibilityIdentifier("Edit Image")
                 
                 HStack {
                     TextField("Enter your name", text: $profileName)
@@ -78,6 +79,7 @@ struct Profile: View {
                     }
                 }
                 .padding()
+                .accessibilityIdentifier("Sign Out")
                 .foregroundColor(.white)
                 .background(Color.red)
                 .cornerRadius(8)
