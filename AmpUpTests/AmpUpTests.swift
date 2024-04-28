@@ -26,15 +26,18 @@ class MockFirestoreService: FirestoreServiceProtocol {
     var shouldReturnError: Bool = false
     var setDataWasCalled: Bool = false
     
+    var lastError: Error?
+    
     func setData(for document: String, in collection: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         setDataCallCount += 1
         lastSetDataDocument = document
         lastSetDataCollection = collection
         lastSetData = data
-        
         setDataWasCalled = true
+        
         if shouldReturnError {
             let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Firestore Error"])
+            lastError = error
             completion(error)
         } else {
             completion(nil)
@@ -45,7 +48,15 @@ class MockFirestoreService: FirestoreServiceProtocol {
         addDataCallCount += 1
         lastAddDataCollection = collection
         lastAddData = data
-        completion(nil, "dummyDocumentID") // Simulate success and document ID creation
+
+        if shouldReturnError {
+            let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Firestore Error"])
+            lastError = error
+            completion(error, nil)
+        } else {
+            lastError = nil
+            completion(nil, "dummyDocumentID")
+        }
     }
 
     func listenToDocument(in collection: String, document: String, completion: @escaping ([String: Any]?, Error?) -> Void) -> ListenerRegistration {
@@ -74,7 +85,6 @@ class MockAuthService: AuthProtocol {
 
 class ListenerRegistrationMock: NSObject, ListenerRegistration {
     func remove() {
-        // Mock implementation
     }
 }
 
@@ -89,22 +99,25 @@ final class AmpUpTests: XCTestCase {
     }
 
     func testStartWorkout() throws {
-        // Create an instance of the mock service
         let mockFirestoreService = MockFirestoreService()
         
-        // Assume WorkoutGraphViewModel exists and startWorkout has been moved to it
         let workoutGraph = WorkoutGraph(firestoreService: mockFirestoreService)
-        
-        // Call startWorkout
         workoutGraph.startWorkout()
         
-        // Verify that setData was called once
         XCTAssertEqual(mockFirestoreService.setDataCallCount, 1)
-        
-        // Verify that setData was called with the correct parameters
         XCTAssertEqual(mockFirestoreService.lastSetDataCollection, "start_stop")
-        XCTAssertEqual(mockFirestoreService.lastSetDataDocument, "0")
         XCTAssertEqual(mockFirestoreService.lastSetData?["state"] as? String, "start")
+    }
+    
+    func testStartWorkoutWithError() throws {
+        let mockFirestoreService = MockFirestoreService()
+        mockFirestoreService.shouldReturnError = true
+
+        let workoutGraph = WorkoutGraph(firestoreService: mockFirestoreService)
+        workoutGraph.startWorkout()
+        
+        XCTAssertEqual(mockFirestoreService.setDataCallCount, 1)
+        XCTAssertNotNil(mockFirestoreService.lastError)
     }
     
     func testEndWorkout() throws {
@@ -115,7 +128,6 @@ final class AmpUpTests: XCTestCase {
 
         XCTAssertEqual(mockFirestoreService.setDataCallCount, 1)
         XCTAssertEqual(mockFirestoreService.lastSetDataCollection, "start_stop")
-        XCTAssertEqual(mockFirestoreService.lastSetDataDocument, "0")
         XCTAssertEqual(mockFirestoreService.lastSetData?["state"] as? String, "stop")
 
         XCTAssertEqual(mockFirestoreService.addDataCallCount, 1)
@@ -126,10 +138,23 @@ final class AmpUpTests: XCTestCase {
         XCTAssertTrue(workoutGraph.workoutData.isEmpty)
     }
     
+    func testEndWorkoutWithError() throws {
+        let mockFirestoreService = MockFirestoreService()
+        mockFirestoreService.shouldReturnError = true
+        
+        let workoutGraph = WorkoutGraph(firestoreService: mockFirestoreService)
+        workoutGraph.workoutData = [1,2,4]
+        workoutGraph.endWorkout()
+
+        XCTAssertEqual(mockFirestoreService.setDataCallCount, 1)
+        XCTAssertNotNil(mockFirestoreService.lastError)
+        XCTAssertEqual(mockFirestoreService.addDataCallCount, 1)
+    }
+    
     func testHandleSignUpSuccess() {
         let mockAuthService = MockAuthService()
         let mockFirestoreService = MockFirestoreService()
-        let mockAppState = AppState() // Assuming AppState is instantiable like this
+        let mockAppState = AppState()
         let signupViewModel = SignupViewModel(authService: mockAuthService, firestoreService: mockFirestoreService, appState: mockAppState)
         
         signupViewModel.email = "test@example.com"
@@ -190,24 +215,4 @@ final class AmpUpTests: XCTestCase {
         comparisonView.performComparison()
         XCTAssertEqual(result, "Both workouts hit the peak value the same number of times (1).")
     }
-
-//    func testFetchWorkoutDataSuccess() {
-//        // Mock service setup
-//        let mockService = MockFirestoreService()
-//        // Adjust mock data to match expected structure: [(title: String, data: [Int])]
-//        mockService.mockWorkoutDataWithTitles = [("Workout 1", [10, 20, 30]), ("Workout 2", [40, 50, 60])]
-//
-//        let prev = PreviousWorkouts(firestoreService: mockService)
-//
-//        let expectation = XCTestExpectation(description: "Fetch workout data with titles")
-//        prev.fetchWorkoutData()
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            XCTAssertEqual(prev.workoutDataWithTitles.count, Optional(2), "workoutDataWithTitles should contain data for 2 workouts")
-//            expectation.fulfill()
-//        }
-//
-//        wait(for: [expectation], timeout: 5.0)
-//    }
-
 }

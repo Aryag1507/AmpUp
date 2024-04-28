@@ -22,7 +22,7 @@ final class AmpUpUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testInitial() throws {
+    func testChangeGroup() throws {
         let app = XCUIApplication()
         app.launch()
         
@@ -188,7 +188,7 @@ final class AmpUpUITests: XCTestCase {
         expectation(for: existsSignup, evaluatedWith: signUp, handler: nil)
         waitForExpectations(timeout: 5, handler: nil)  // Adjust timeout as necessary
 
-        XCTAssertTrue(signUp.exists, "Profile tab does not exist")
+        XCTAssertTrue(signUp.exists, "Signup Button does not exist")
         signUp.tap()
         
     }
@@ -386,16 +386,16 @@ final class AmpUpUITests: XCTestCase {
         let exists4 = NSPredicate(format: "exists == 1")
         expectation(for: exists4, evaluatedWith: endWorkout, handler: nil)
         waitForExpectations(timeout: 5, handler: nil)
-        XCTAssertTrue(endWorkout.exists, "The 'Pause Workout' button should exist.")
+        XCTAssertTrue(endWorkout.exists, "The 'End Workout' button should exist.")
         endWorkout.tap()
     }
     
-//    func testLaunchPerformance() throws {
-//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-//            // This measures how long it takes to launch your application.
-//            measure(metrics: [XCTApplicationLaunchMetric()]) {
-//                XCUIApplication().launch()
-//            }
-//        }
-//    }
+    func testLaunchPerformance() throws {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
+            // This measures how long it takes to launch your application.
+            measure(metrics: [XCTApplicationLaunchMetric()]) {
+                XCUIApplication().launch()
+            }
+        }
+    }
 }
